@@ -10,6 +10,7 @@ export default async function Home() {
     <main>
       <h1>Travel Trecks - API works</h1>
       <p>Polucheno cemperov: {testCampers.length}</p>
+      
     </main>
   )
 }
