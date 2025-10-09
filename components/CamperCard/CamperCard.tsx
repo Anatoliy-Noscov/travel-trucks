@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,12 +11,26 @@ interface CamperCardProps {
 }
 
 const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
+  // Правильно обрабатываем gallery как массив объектов
+  const getImageUrl = () => {
+    if (camper.gallery && 
+        Array.isArray(camper.gallery) && 
+        camper.gallery.length > 0 && 
+        camper.gallery[0].original) {
+      return camper.gallery[0].original; // ← используем original
+    }
+    
+    // Fallback изображение
+    return '/images/hero.jpg';
+  };
+
+  const imageUrl = getImageUrl();
+
   return (
     <div className={styles.card}>
-      {/* Временное изображение - потом заменим на gallery[0] */}
       <div className={styles.imageContainer}>
         <Image
-          src="/images/hero.jpg"
+          src={imageUrl}
           alt={camper.name}
           width={290}
           height={310}
@@ -23,7 +39,6 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
       </div>
       
       <div className={styles.content}>
-        {/* Заголовок и цена */}
         <div className={styles.header}>
           <h3 className={styles.title}>{camper.name}</h3>
           <div className={styles.price}>
@@ -31,7 +46,6 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
           </div>
         </div>
         
-        {/* Рейтинг и локация */}
         <div className={styles.meta}>
           <div className={styles.rating}>
             <span className={styles.star}>⭐</span>
@@ -43,7 +57,6 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
           </div>
         </div>
         
-        {/* Описание */}
         <p className={styles.description}>
           {camper.description.length > 100 
             ? `${camper.description.substring(0, 100)}...` 
@@ -51,7 +64,6 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
           }
         </p>
         
-        {/* Особенности */}
         <div className={styles.features}>
           <div className={styles.feature}>
             <span className={styles.featureIcon}>👥</span>
@@ -85,7 +97,6 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
           )}
         </div>
         
-        {/* Кнопка */}
         <Link href={`/catalog/${camper.id}`} className={styles.button}>
           Show more
         </Link>

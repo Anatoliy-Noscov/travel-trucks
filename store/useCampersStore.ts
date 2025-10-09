@@ -22,16 +22,13 @@ interface CampersState {
 const initialFilters: FilterParams = {
   location: '',
   form: '',
-  airConditioner: false,
+  AC: false,
   kitchen: false,
   TV: false,
-  radio: false,
-  refrigerator: false,
-  microwave: false,
-  gas: false,
-  water: false,
+  bathroom: false,
+  transmission: '',
   page: 1,
-  limit: 4, // По макету - 4 карточки на странице
+  limit: 4,
 };
 
 export const useCampersStore = create<CampersState>((set, get) => ({
@@ -50,16 +47,21 @@ export const useCampersStore = create<CampersState>((set, get) => ({
       const currentFilters = get().filters;
       const newFilters = reset ? { ...initialFilters, ...params } : { ...currentFilters, ...params };
       
+      console.log('Fetching campers with filters:', newFilters); // ← добавить
+      
       const response = await campersApi.getCampers(newFilters);
+      
+      console.log('Received campers:', response); // ← добавить
       
       set({
         filteredCampers: response,
         filters: newFilters,
         isLoading: false,
         currentPage: 1,
-        hasMore: response.length === newFilters.limit,
+        hasMore: response.length >= newFilters.limit!,
       });
     } catch (error) {
+      console.error('Error fetching campers:', error); // ← добавить
       set({ 
         error: 'Failed to fetch campers', 
         isLoading: false 
@@ -67,6 +69,7 @@ export const useCampersStore = create<CampersState>((set, get) => ({
     }
   },
 
+  
   fetchCamperById: async (id: string) => {
     set({ isLoading: true, error: null });
     
@@ -103,11 +106,11 @@ export const useCampersStore = create<CampersState>((set, get) => ({
         page: nextPage,
       });
 
-      if (response.length > 0) {
+      if (response.length > filteredCampers.length) {
         set({
-          filteredCampers: [...filteredCampers, ...response],
+          filteredCampers: response,
           currentPage: nextPage,
-          hasMore: response.length === filters.limit,
+          hasMore: response.length - filteredCampers.length === filters.limit!,
           isLoading: false,
         });
       } else {

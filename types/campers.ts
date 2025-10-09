@@ -1,27 +1,37 @@
+export interface GalleryImage {
+  thumb: string;
+  original: string;
+}
+
 export interface Camper {
- id: string;
- name: string;
- price: number;
- rating: number;
- location: string;
- adults: number;
- children: number;
- engine: string;
- transmission: string;
- form: string;
- length: string;
- width: string;
- height: string;
- tank: string;
- consumption: string;
- description: string;
- gallery: string[];
- reviews: Review[];
- details: Details;
- features: Features;
- AC: boolean;
- bathroom: boolean;
- kitchen: boolean;
+  id: string;
+  name: string;
+  price: number;
+  rating: number;
+  location: string;
+  adults: number;
+  children: number;
+  engine: string;
+  transmission: string;
+  form: string;
+  length: string;
+  width: string;
+  height: string;
+  tank: string;
+  consumption: string;
+  description: string;
+  gallery: GalleryImage[]; // ← изменяем на массив объектов
+  reviews: Review[];
+  details: Details;
+  AC: boolean;
+  bathroom: boolean;
+  kitchen: boolean;
+  TV: boolean;
+  radio: boolean;
+  refrigerator: boolean;
+  microwave: boolean;
+  gas: boolean;
+  water: boolean;
 }
 
 export interface Review {
@@ -54,17 +64,14 @@ export interface Features {
 export interface FilterParams {
     location?: string;
     form?: string;
-    airConditioner?: boolean;
+    AC?: boolean;
     kitchen?: boolean;
     TV?: boolean;
-    radio?: boolean;
-    refrigerator?: boolean;
-    microwave?: boolean;
-    gas?: boolean;
-    water?: boolean;
+    bathroom?: boolean;
+    transmission?: string;
     page?: number;
     limit?: number;
-}
+  }
 
 // export interface Camper {
 //     id: string;

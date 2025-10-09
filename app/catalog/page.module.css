@@ -37,3 +37,15 @@
   .loadMore:hover {
     background-color: #D84343;
   }
+
+  .noResults {
+    text-align: center;
+    padding: 60px 20px;
+    color: #475467;
+  }
+
+  .noResults h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #101828;
+  }
