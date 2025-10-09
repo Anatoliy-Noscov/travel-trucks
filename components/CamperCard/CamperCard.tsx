@@ -14,7 +14,7 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
       {/* Временное изображение - потом заменим на gallery[0] */}
       <div className={styles.imageContainer}>
         <Image
-          src="/images/camper-placeholder.jpg"
+          src="/images/hero.jpg"
           alt={camper.name}
           width={290}
           height={310}
