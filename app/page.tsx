@@ -1,16 +1,24 @@
-import { campersApi } from "@/services/campersApi";
+import  styles from "./page.module.css";
+import React from 'react';
+import Link from 'next/link';
 
 export default async function Home() {
 
 
-  const testCampers = await campersApi.getCampers({ limit: 2 });
-  console.log('Test API response:', testCampers);
-
   return (
-    <main>
-      <h1>Travel Trecks - API works</h1>
-      <p>Polucheno cemperov: {testCampers.length}</p>
-      
-    </main>
+
+      <div className={styles.container}>
+        {/*background*/}
+        <section className={styles.hero}>
+          <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>Campers of your dreams</h1>
+          <p className={styles.textHome}>You can find everything you want in our catalog</p>
+
+          <Link href="/catalog" className={styles.heroButton}><span className={styles.textButton}>View now</span></Link>
+          </div>
+        </section>
+      </div>
+
+
   )
 }

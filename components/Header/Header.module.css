@@ -1,33 +1,39 @@
 .header {
-    background-color: #101828;
-    padding: 20px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    border-bottom: 1px solid var(--badges);
+    padding: 24px 64px;
+    /* width: 1440px; */
+    height: 72px;
+    background: var(--inputs);
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
-.logo {
-    color: #fff;
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color o.3s ease;
+.container {
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    padding: 0 ;
+ 
 }
 
-.logo:hover {
-    color: #E44848;
+.logo {
+    position: absolute;
+    left: 64px;
+    top: 50%; 
+    transform: translateY(-50%); 
+    text-decoration: none;
+    transition: opacity 0.3s ease;
 }
+
 
 .nav {
-    display: flex;
-    gap: 32px;
+    width: 138px;
+    /* height: 24px; */
+    /* display: flex; */
+    gap: 32px; /* расстояние между ссылками */
+    justify-content: center;
 }
 
 .navLink {
@@ -45,3 +51,15 @@
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.textNav {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    color: var(--main);
+}
+
+.textNav:hover {
+    color: var(--button-hover);
+}
