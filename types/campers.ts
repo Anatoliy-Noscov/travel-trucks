@@ -19,6 +19,9 @@ export interface Camper {
  reviews: Review[];
  details: Details;
  features: Features;
+ AC: boolean;
+ bathroom: boolean;
+ kitchen: boolean;
 }
 
 export interface Review {
