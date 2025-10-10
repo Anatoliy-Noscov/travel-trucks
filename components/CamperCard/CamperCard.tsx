@@ -5,12 +5,20 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Camper } from '@/types/campers';
 import styles from './CamperCard.module.css';
+import  { useFavoritesStore } from '@/store/useFavoritesStore';
 
 interface CamperCardProps {
   camper: Camper;
 }
 
 const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
+  const {toggleFavorite, isFavorite} = useFavoritesStore();
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(camper);
+  }
+
   // Правильно обрабатываем gallery как массив объектов
   const getImageUrl = () => {
     if (camper.gallery && 
@@ -25,6 +33,7 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
   };
 
   const imageUrl = getImageUrl();
+  const favorite = isFavorite(camper.id);
 
   return (
     <div className={styles.card}>
@@ -36,7 +45,27 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
           height={310}
           className={styles.image}
         />
+
+      <button 
+          className={`${styles.favoriteButton} ${favorite ? styles.favoriteActive : ""}`}
+            onClick={handleFavoriteClick}
+            aria-label={favorite ? 'Remove from favorites': "Add to favorites"}>
+
+          <svg
+            width="24"
+            height="24"
+            viewBox='0 0 24 24'
+            fill={favorite ? '#E44848' : 'none'}
+            stroke={favorite ? '#E44848' : '#ffffff'}
+            strokeWidth="2" >
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+
+          </svg>
+
+      </button>
       </div>
+
+      
       
       <div className={styles.content}>
         <div className={styles.header}>
