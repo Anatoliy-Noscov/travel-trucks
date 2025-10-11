@@ -1,9 +1,13 @@
+'use client'
+
 import React from "react";
 import Link from 'next/link';
 import styles from './Header.module.css';
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 const Header: React.FC = () => {
+    const pathname = usePathname();
     return (
         <header className={styles.header}> 
             <div className={styles.container}>
@@ -19,11 +23,30 @@ const Header: React.FC = () => {
                 />
                 </Link>
 
-                <nav className={styles.nav}>
-                    <Link href="/" className={styles.navLink}><span className={styles.textNav}>Home</span></Link>
+                {/* <nav className={styles.nav}>
+                    <Link href="/" 
+                    className={styles.navLink}>
+                    <span className={styles.textNav}>Home</span>
+                    </Link>
+
                     <Link href="/" className={styles.navLink}><span className={styles.textNav}>Catalog</span></Link>
 
-                </nav>
+                </nav> */}
+
+                
+          <Link 
+            href="/" 
+            className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}
+          >
+            Home
+          </Link>
+          <Link 
+            href="/catalog" 
+            className={`${styles.navLink} ${pathname === '/catalog' ? styles.active : ''}`}
+          >
+            Catalog
+          </Link>
+       
 
             </div>
         </header>

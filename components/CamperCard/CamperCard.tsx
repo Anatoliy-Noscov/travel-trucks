@@ -68,11 +68,11 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
           <div className={styles.price}>
             <span className={styles.priceValue}>€{camper.price.toFixed(2)}</span>
             <button 
-            className={`${styles.favoriteButton} ${favorites ? styles.favoriteActive : ""}`}
+            className={`${styles.favoriteButton} ${isFavorite ? styles.favoriteActive : ""}`}
             onClick={handleFavoriteClick}
-            aria-label={favorites ? 'Remove from favorites' : 'Add to favorites'}
+            aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           >
-            {favorites ? (
+            {isFavorite ? (
               <img src="/images/HeartActive.svg" alt="Active heart" width="24" height="21"/>
             ) : (
               <img src="/images/Heart.svg" alt="Heart" width="24" height="21"/>

@@ -28,7 +28,9 @@ const Filters: React.FC = () => {
             <div className={styles.section}>
                 <h3 className={styles.sectionTitle}>Location</h3>
                 <div className={styles.inputGroup}>
+                
                     <input 
+                    
                     type="text"
                     placeholder="Kyiv, Ukraine"
                     className={styles.input} 
@@ -57,6 +59,7 @@ const Filters: React.FC = () => {
                             className={styles.checkbox} 
                             checked={filters.AC || false} 
                             onChange={(e) => handleInputChange('AC', e.target.checked)}/>
+                            <img src="/icons/conditioner.svg" alt="icon" width="32" height="32"/>
                             <span className={styles.checkboxText}>AC</span>
                         </label>
 
@@ -66,6 +69,7 @@ const Filters: React.FC = () => {
                             className={styles.checkbox} 
                             checked={filters.transmission === 'automatic'}
                             onChange={(e) => handleInputChange('transmission', e.target.checked ? 'automatic' : '')}/>
+                            <img src="/icons/APP.svg" alt="icon" width="32" height="32"/>
                             <span className={styles.checkboxText}>Automatic</span>
                         </label>
 
@@ -76,6 +80,7 @@ const Filters: React.FC = () => {
                             checked={filters.kitchen || false}
                             onChange={(e) => handleInputChange('kitchen', e.target.checked)}
                             />
+                            <img src="/icons/Cip.svg" alt="icon" width="32" height="32"/>
                             <span className={styles.checkboxText}>Kitchen</span>
                         </label>
 
@@ -86,6 +91,7 @@ const Filters: React.FC = () => {
                             checked={filters.TV || false}
                             onChange={(e) => handleInputChange('TV', e.target.checked)}
                             />
+                            <img src="/icons/tv.svg" alt="icon" width="32" height="32"/>
                             <span className={styles.checkboxText}>TV</span>
                         </label>
 
@@ -96,6 +102,7 @@ const Filters: React.FC = () => {
                             checked={filters.bathroom || false}
                             onChange={(e) => handleInputChange('bathroom', e.target.checked)}
                             />
+                            <img src="/icons/bathrom.svg" alt="icon" width="32" height="32"/>
                             <span className={styles.checkboxText}>Bathroom</span>
                         </label>
                     </div>
@@ -116,6 +123,7 @@ const Filters: React.FC = () => {
                             className={styles.radio}
                             checked={filters.form === "van"}
                             onChange={() => handleRadioChange('van')}/>
+                            <img src="/icons/bi_grid-1x2.svg" alt="icon" width="32" height="32"/>
                             <span className={styles.radioText}>Van</span>
                         </label>
 
@@ -126,6 +134,7 @@ const Filters: React.FC = () => {
                             className={styles.radio}
                             checked={filters.form === 'fullyIntegrated'} 
                             onChange={() => handleRadioChange('fullyIntegrated')}/>
+                            <img src="/icons/bi_grid1x4.svg" alt="icon" width="32" height="32"/>
                             <span className={styles.radioText}>Fully Integrated</span>
                         </label>
 
@@ -136,6 +145,7 @@ const Filters: React.FC = () => {
                             className={styles.radio}
                             checked={filters.form === 'fullyIntegrated'}
                             onChange={() => handleRadioChange('alcove')}/>
+                            <img src="/icons/APP.svg" alt="icon" width="32" height="32"/>
                             <span className={styles.radioText}>Alcove</span>
                         </label>
                     </div>

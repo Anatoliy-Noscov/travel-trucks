@@ -14,7 +14,6 @@ export default function Catalog() {
     hasMore, 
     loadMore, 
     fetchCampers, 
-    currentPage 
   } = useCampersStore();
 
   useEffect(() => {
@@ -44,13 +43,7 @@ export default function Catalog() {
             </div>
           ) : (
             <>
-              <div className={styles.resultsInfo}>
-                {/* <p>
-                  Showing {filteredCampers.length} campers
-                  {currentPage > 1 && ` • Page ${currentPage}`}
-                </p> */}
-              </div>
-
+          
               <div className={styles.campersGrid}>
                 {filteredCampers.map(camper => (
                   <CamperCard key={camper.id} camper={camper} />

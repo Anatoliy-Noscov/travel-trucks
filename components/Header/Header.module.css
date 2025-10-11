@@ -37,19 +37,20 @@
 }
 
 .navLink {
-    color: #fff;
+    color: var(--main);
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
     transition: color 0.3s ease;
     padding: 8px 16px;
     border-radius: 4px;
+    position: relative;
 }
 
-.navLink:hover {
-    color: #E44848;
-    background-color: rgba(255, 255, 255, 0.1);
-}
+.navLink.active {
+    color: #E44848; /* или твой --button-hover цвет */
+  }
+
 
 .textNav {
     font-family: var(--font-family);
@@ -60,6 +61,6 @@
     color: var(--main);
 }
 
-.textNav:hover {
+/* .textNav:hover {
     color: var(--button-hover);
-}
+} */

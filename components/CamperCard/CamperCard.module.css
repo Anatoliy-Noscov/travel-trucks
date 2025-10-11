@@ -79,7 +79,10 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    gap: 12px;      
+    height: 32px;
   }
 
   /* .headerHeart {
@@ -94,6 +97,21 @@
     font-size: 24px;
     line-height: 133%;
     color: var(--main);
+
+    line-height: 150%;
+    color: var(--text);
+    margin-bottom: 24px;
+    min-height: 24px;
+
+    white-space: nowrap;      
+    overflow: hidden;         
+
+    flex: 1; 
+    
+    white-space: nowrap;      
+    overflow: hidden;         
+    /* text-overflow: ellipsis; */
+    margin-bottom: 0;
   }
   
   .price {
