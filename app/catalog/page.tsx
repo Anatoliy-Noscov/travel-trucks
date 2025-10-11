@@ -1,8 +1,7 @@
-'use client'
+"use client";
 
 import React, { useEffect } from 'react';
 import { useCampersStore } from '@/store/useCampersStore';
-import { useFavoritesStore } from '@/store/useFavoritesStore';
 import styles from './page.module.css';
 import Filters from '@/components/Filters/Filters';
 import CamperCard from '@/components/CamperCard/CamperCard';
@@ -14,20 +13,13 @@ export default function Catalog() {
     isLoading, 
     hasMore, 
     loadMore, 
-    fetchCampers 
+    fetchCampers, 
+    currentPage 
   } = useCampersStore();
 
   useEffect(() => {
     fetchCampers();
   }, [fetchCampers]);
-  
-  useEffect(() => {
-    if (filteredCampers.length > 0) {
-      console.log('First camper data:', filteredCampers[0]);
-      console.log('Gallery type:', typeof filteredCampers[0].gallery);
-      console.log('Gallery value:', filteredCampers[0].gallery);
-    }
-  }, [filteredCampers]);
 
   const handleLoadMore = () => {
     loadMore();
@@ -52,18 +44,35 @@ export default function Catalog() {
             </div>
           ) : (
             <>
-              {filteredCampers.map(camper => (
-                <CamperCard key={camper.id} camper={camper} />
-              ))}
-              
+              <div className={styles.resultsInfo}>
+                {/* <p>
+                  Showing {filteredCampers.length} campers
+                  {currentPage > 1 && ` • Page ${currentPage}`}
+                </p> */}
+              </div>
+
+              <div className={styles.campersGrid}>
+                {filteredCampers.map(camper => (
+                  <CamperCard key={camper.id} camper={camper} />
+                ))}
+              </div>
+
               {hasMore && (
-                <button 
-                  className={styles.loadMore} 
-                  onClick={handleLoadMore}
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Loading...' : 'Load more'}
-                </button>
+                <div className={styles.loadMoreContainer}>
+                  <button 
+                    className={styles.loadMore} 
+                    onClick={handleLoadMore}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Loading...' : 'Load more'}
+                  </button>
+                </div>
+              )}
+
+              {!hasMore && filteredCampers.length > 0 && (
+                <div className={styles.endMessage}>
+                  <p>You've reached the end of the list</p>
+                </div>
               )}
             </>
           )}

@@ -46,6 +46,9 @@ const Filters: React.FC = () => {
                 {/* Vehicle equipment */}
                 <div className={styles.subsection}>
                     <h4 className={styles.subsectionTitle}>Vehicle equipment</h4>
+                    <svg width="360" height="2" viewBox="0 0 360 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 1H360" stroke="#DADDE1" />
+</svg>
                     <div className={styles.checkboxGroup}>
 
                         <label className={styles.checkboxLabel}>
@@ -101,6 +104,9 @@ const Filters: React.FC = () => {
                 {/* subsection Vehicle type */}
                 <div className={styles.subsection}>
                     <h4 className={styles.subsectionTitle}>Vehicle type</h4>
+                    <svg width="360" height="2" viewBox="0 0 360 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 1H360" stroke="#DADDE1" />
+</svg>
                     <div className={styles.radioGroup}>
 
                         <label className={styles.radioLabel}>

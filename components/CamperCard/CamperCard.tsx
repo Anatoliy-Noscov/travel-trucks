@@ -11,8 +11,19 @@ interface CamperCardProps {
   camper: Camper;
 }
 
+const formatLocation = (location: string) => {
+  if (location.includes(',')) {
+    const [country, city] = location.split(',').map(part=> part.trim());
+    return `${city}, ${country}`;
+  }
+  return location;
+}
+
 const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
-  const {toggleFavorite, isFavorite} = useFavoritesStore();
+  const {favorites, toggleFavorite} = useFavoritesStore();
+  const isFavorite = favorites.some(fav => fav.id === camper.id);
+
+  // const {toggleFavorite, isFavorite} = useFavoritesStore();
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -33,7 +44,7 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
   };
 
   const imageUrl = getImageUrl();
-  const favorite = isFavorite(camper.id);
+  // const favorite = isFavorite(camper.id);
 
   return (
     <div className={styles.card}>
@@ -41,48 +52,49 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
         <Image
           src={imageUrl}
           alt={camper.name}
-          width={290}
-          height={310}
+          width={292}
+          height={320}
           className={styles.image}
         />
-
-      <button 
-          className={`${styles.favoriteButton} ${favorite ? styles.favoriteActive : ""}`}
-            onClick={handleFavoriteClick}
-            aria-label={favorite ? 'Remove from favorites': "Add to favorites"}>
-
-          <svg
-            width="24"
-            height="24"
-            viewBox='0 0 24 24'
-            fill={favorite ? '#E44848' : 'none'}
-            stroke={favorite ? '#E44848' : '#ffffff'}
-            strokeWidth="2" >
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-
-          </svg>
-
-      </button>
       </div>
 
       
-      
       <div className={styles.content}>
         <div className={styles.header}>
+          
           <h3 className={styles.title}>{camper.name}</h3>
+
+          <div className={styles.headerHeart}>
           <div className={styles.price}>
             <span className={styles.priceValue}>€{camper.price.toFixed(2)}</span>
+            <button 
+            className={`${styles.favoriteButton} ${favorites ? styles.favoriteActive : ""}`}
+            onClick={handleFavoriteClick}
+            aria-label={favorites ? 'Remove from favorites' : 'Add to favorites'}
+          >
+            {favorites ? (
+              <img src="/images/HeartActive.svg" alt="Active heart" width="24" height="21"/>
+            ) : (
+              <img src="/images/Heart.svg" alt="Heart" width="24" height="21"/>
+            )}
+          </button>
           </div>
+        
+          </div>
+          
         </div>
         
         <div className={styles.meta}>
           <div className={styles.rating}>
-            <span className={styles.star}>⭐</span>
+            <span className={styles.star}>
+            <img src="/images/StarActive.svg" alt="icon" width="16" height="16"/>
+            </span>
             <span>{camper.rating}</span>
             <span className={styles.reviews}>({camper.reviews?.length || 0} Reviews)</span>
           </div>
           <div className={styles.location}>
-            📍 {camper.location}
+          <img src="/images/Map.svg" alt="icon" width="16" height="16"/>
+             {formatLocation(camper.location)}
           </div>
         </div>
         
@@ -94,34 +106,81 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
         </p>
         
         <div className={styles.features}>
+          
           <div className={styles.feature}>
-            <span className={styles.featureIcon}>👥</span>
-            <span>{camper.adults} adults</span>
-          </div>
-          {camper.children > 0 && (
-            <div className={styles.feature}>
-              <span className={styles.featureIcon}>🧒</span>
-              <span>{camper.children} children</span>
-            </div>
-          )}
-          <div className={styles.feature}>
-            <span className={styles.featureIcon}>⚙️</span>
+            <span className={styles.featureIcon}>
+            <img src="/images/Automatic.svg" alt="icon" width="20" height="20"/>
+            </span>
             <span>{camper.transmission}</span>
           </div>
           <div className={styles.feature}>
-            <span className={styles.featureIcon}>⛽</span>
+            <span className={styles.featureIcon}>
+            <img src="/images/Petrol.svg" alt="icon" width="20" height="20"/>
+            </span>
             <span>{camper.engine}</span>
           </div>
           {camper.AC && (
             <div className={styles.feature}>
-              <span className={styles.featureIcon}>❄️</span>
+              <span className={styles.featureIcon}>
+              <img src="/images/AC.svg" alt="icon" width="20" height="20"/>
+              </span>
               <span>AC</span>
             </div>
           )}
           {camper.kitchen && (
             <div className={styles.feature}>
-              <span className={styles.featureIcon}>🍳</span>
+              <span className={styles.featureIcon}>
+              <img src="/images/Kitchen.svg" alt="icon" width="20" height="20"/>
+              </span>
               <span>Kitchen</span>
+            </div>
+          )}
+          {camper.radio && (
+            <div className={styles.feature}>
+              <span className={styles.featureIcon}>
+              <img src="/images/Radio.svg" alt="icon" width="20" height="20"/>
+              </span>
+              <span>Radio</span>
+            </div>
+          )}
+          {camper.bathroom && (
+            <div className={styles.feature}>
+              <span className={styles.featureIcon}>
+              <img src="/images/Bathroom.svg" alt="icon" width="20" height="20"/>
+              </span>
+              <span>Bathroom</span>
+            </div>
+          )}
+          {camper.refrigerator && (
+            <div className={styles.feature}>
+              <span className={styles.featureIcon}>
+              <img src="/images/Refrigerator.svg" alt="icon" width="20" height="20"/>
+              </span>
+              <span>Refrigerator</span>
+            </div>
+          )}
+          {camper.microwave && (
+            <div className={styles.feature}>
+              <span className={styles.featureIcon}>
+              <img src="/images/Microwave.svg" alt="icon" width="20" height="20"/>
+              </span>
+              <span>Microwave</span>
+            </div>
+          )}
+          {camper.gas && (
+            <div className={styles.feature}>
+              <span className={styles.featureIcon}>
+              <img src="/images/Gas.svg" alt="icon" width="20" height="20"/>
+              </span>
+              <span>Gas</span>
+            </div>
+          )}
+          {camper.water && (
+            <div className={styles.feature}>
+              <span className={styles.featureIcon}>
+              <img src="/images/Water.svg" alt="icon" width="20" height="20"/>
+              </span>
+              <span>Water</span>
             </div>
           )}
         </div>

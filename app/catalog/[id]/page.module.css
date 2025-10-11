@@ -370,3 +370,21 @@
       grid-template-columns: 1fr;
     }
   }
+
+  .successMessage {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .bookButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .bookButton:disabled:hover {
+    background-color: #ccc;
+  }

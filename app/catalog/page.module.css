@@ -17,7 +17,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    /* gap: 24px; */
   }
   
   .loadMore {
@@ -48,4 +48,112 @@
     font-size: 24px;
     margin-bottom: 8px;
     color: #101828;
+  }
+
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 48px 64px 52px 64px;
+  }
+  
+  .content {
+    display: flex;
+    gap: 64px;
+  }
+  
+  .filters {
+    flex: 0 0 360px;
+  }
+  
+  .campers {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* gap: 24px; */
+  }
+  
+  .campersGrid {
+    height: 1568px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  /* .resultsInfo {
+    padding: 16px 0;
+    border-bottom: 1px solid #e4e4e4;
+  } */
+  
+  /* .resultsInfo p {
+    margin: 0;
+    color: #475467;
+    font-size: 14px;
+  } */
+  
+  .noResults {
+    text-align: center;
+    padding: 60px 20px;
+    color: #475467;
+  }
+  
+  .noResults h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #101828;
+  }
+  
+  .loadMoreContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .loadMore {
+    background-color: #E44848;
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 200px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 200px;
+  }
+  
+  .loadMore:hover:not(:disabled) {
+    background-color: #D84343;
+  }
+  
+  .loadMore:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .endMessage {
+    text-align: center;
+    padding: 40px 20px;
+    color: #475467;
+    border-top: 1px solid #e4e4e4;
+    margin-top: 20px;
+  }
+  
+  
+  .endMessage p {
+    margin: 0;
+    font-size: 16px;
+    font-style: italic;
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 968px) {
+    .content {
+      flex-direction: column;
+      gap: 32px;
+    }
+    
+    .filters {
+      flex: none;
+      width: 100%;
+    }
   }

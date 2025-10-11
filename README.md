@@ -34,3 +34,26 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+# TravelTrucks - Camper Rental
+
+Modern web application for renting campers built with Next.js, TypeScript, and Zustand.
+
+## Features
+- Browse camper catalog with filters
+- Add campers to favorites
+- View detailed camper information
+- Book campers with contact form
+- Responsive design
+
+## Tech Stack
+- Next.js 15 with App Router
+- TypeScript
+- Zustand for state management
+- Axios for API calls
+- CSS Modules for styling
+
+## Installation
+npm install
+npm run dev

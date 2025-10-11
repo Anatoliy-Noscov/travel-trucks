@@ -1,32 +1,44 @@
 .card {
     background: #fff;
-    border: 1px solid #e4e4e4;
     border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* overflow: hidden; */
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); */
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
     position: relative;
+
+
+    border: 1px solid var(--gray-light);
+    padding: 24px;
+    /* width: 888px; */
+    /* height: 368px; */
+    background: var(--white);
+
+    display: flex;
+    flex-direction: row; /* элементы в строку (рядом) */
+    gap: 24px;
+    align-items: flex-start;
   }
   
   .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    /* transform: translateY(-4px); */
+    /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); */
   }
   
   .imageContainer {
-    width: 100%;
-    height: 310px;
+    width: 292px;
+    height: 320px;
     overflow: hidden;
     position: relative;
   }
   
   .image {
-    width: 100%;
-    height: 100%;
+    border-radius: 10px;
+    width: 292px;
+    height: 320px;
     object-fit: cover;
   }
 
-  .favoriteButton {
+  /* .favoriteButton {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -41,9 +53,9 @@
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(4px);
-  }
+  } */
 
-  .favoriteButton {
+  /* .favoriteButton {
     background: rgba(255, 255, 255, 1);
     transform: scale(1.1);
   }
@@ -51,10 +63,16 @@
   .favoriteActive {
     background: rgba(255, 255, 255, 1);
 
-  }
+  } */
   
   .content {
-    padding: 24px;
+    width: 524px;
+    height: 320px;
+
+    display: flex;
+    flex-direction: column;
+    position: relative; /* важно для абсолютного позиционирования */
+    min-height: 300px; 
   }
   
   .header {
@@ -63,29 +81,43 @@
     align-items: flex-start;
     margin-bottom: 16px;
   }
+
+  /* .headerHeart {
+    width: 156px;
+    height: 32px;
+   
+  } */
   
   .title {
-    font-size: 24px;
+    font-family: var(--font-family);
     font-weight: 600;
-    color: #101828;
-    margin: 0;
-    line-height: 1.2;
+    font-size: 24px;
+    line-height: 133%;
+    color: var(--main);
   }
   
   .price {
     display: flex;
     align-items: center;
+
   }
   
   .priceValue {
     font-size: 24px;
     font-weight: 600;
     color: #101828;
+
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 133%;
+    color: var(--main);
+    margin-right: 12px;
   }
   
   .meta {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     margin-bottom: 16px;
   }
@@ -93,13 +125,22 @@
   .rating {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 16px;
+    /* gap: 8px; */
+
     color: #101828;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    color: var(--main);
+    margin-right: 16px;
   }
   
   .star {
     font-size: 18px;
+    text-decoration: none;
+
   }
   
   .reviews {
@@ -112,17 +153,28 @@
     gap: 4px;
     font-size: 16px;
     color: #475467;
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--main);
   }
   
   .description {
-    color: #475467;
+    font-family: var(--font-family);
+    font-weight: 400;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 150%;
+    color: var(--text);
     margin-bottom: 24px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    min-height: 24px;
+
+    white-space: nowrap;      
+    overflow: hidden;         
+    text-overflow: ellipsis;   
+    width: 100%;    
+
   }
   
   .features {
@@ -130,17 +182,40 @@
     flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 24px;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    color: var(--main);
+
+    /* height: 104px; */
+    overflow-y: auto;
+    /* overflow: hidden; */
+    /* overflow: hidden; */
+    
   }
   
   .feature {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: #f7f7f7;
+    background: var(--badges);
+    mix-blend-mode: multiply;
     border-radius: 100px;
-    font-size: 14px;
-    color: #101828;
+    padding: 12px 18px;
+    width: 143px;
+    height: 48px;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    color: var(--main);
+    font-family: var(--font-family);
+
+    display: inline-block; /* или inline-flex */
+    width: auto;
+    display: flex;
+    /* align-items: center; */
+    gap: 8px;
   }
   
   .featureIcon {
@@ -148,24 +223,28 @@
   }
   
   .button {
-    display: inline-block;
-    background-color: #E44848;
-    color: #fff;
-    text-decoration: none;
+    width: 166px;
+    height: 56px;
+    background: var(--button);
+
     padding: 16px 40px;
     border-radius: 200px;
-    font-size: 16px;
     font-weight: 500;
-    text-align: center;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    border: 1px solid #E44848;
-    width: 100%;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    font-family: var(--font-family);
+
+    margin-top: auto; 
+    align-self: flex-start;
   }
   
   .button:hover {
     background-color: #D84343;
     border-color: #D84343;
+    
   }
 
+  
   

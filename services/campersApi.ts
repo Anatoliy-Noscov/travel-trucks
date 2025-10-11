@@ -4,29 +4,32 @@ import { Camper, FilterParams } from '@/types/campers';
 export const campersApi = {
   getCampers: async (params: FilterParams = {}): Promise<Camper[]> => {
     const { page = 1, limit = 4, ...filters } = params;
+
+    // MockAPI поддерживает только простые текстовые фильтры
+    const queryParams: any = {
+      page,
+      limit,
+    };
     
-    const response = await api.get<Camper[]>('/campers');
+    // Добавляем только те фильтры, которые поддерживает MockAPI
+    if (filters.location) {
+      queryParams.location = filters.location;
+    }
+
+    if (filters.form) {
+      queryParams.form = filters.form;
+    }
+
+    const response = await api.get<Camper[]>('/campers', { params: queryParams });
     
+    // Обрабатываем ответ API
     const apiData = response.data as any;
     const campersData = apiData.items || apiData;
     
     let filteredData = Array.isArray(campersData) ? campersData : [];
     
-  
-    
-    // Фильтрация на фронтенде
-    if (filters.location) {
-      filteredData = filteredData.filter(camper => 
-        camper.location.toLowerCase().includes(filters.location!.toLowerCase())
-      );
-    }
-    
-    if (filters.form) {
-      filteredData = filteredData.filter(camper => 
-        camper.form === filters.form
-      );
-    }
-    
+    // Применяем булевые фильтры на фронтенде
+    // (MockAPI не поддерживает фильтрацию по булевым полям)
     if (filters.AC) {
       filteredData = filteredData.filter(camper => camper.AC);
     }
@@ -49,11 +52,7 @@ export const campersApi = {
       );
     }
     
-    // Пагинация
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    
-    return filteredData.slice(0, endIndex);
+    return filteredData;
   },
 
   getCamperById: async (id: string): Promise<Camper> => {

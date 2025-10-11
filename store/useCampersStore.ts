@@ -10,8 +10,8 @@ interface CampersState {
   filters: FilterParams;
   currentPage: number;
   hasMore: boolean;
+  totalCount: number;
   
-  // Actions
   fetchCampers: (params?: FilterParams, reset?: boolean) => Promise<void>;
   fetchCamperById: (id: string) => Promise<Camper | null>;
   setFilters: (filters: FilterParams) => void;
@@ -39,6 +39,7 @@ export const useCampersStore = create<CampersState>((set, get) => ({
   filters: initialFilters,
   currentPage: 1,
   hasMore: true,
+  totalCount: 0,
 
   fetchCampers: async (params = {}, reset = false) => {
     set({ isLoading: true, error: null });
@@ -47,21 +48,20 @@ export const useCampersStore = create<CampersState>((set, get) => ({
       const currentFilters = get().filters;
       const newFilters = reset ? { ...initialFilters, ...params } : { ...currentFilters, ...params };
       
-      console.log('Fetching campers with filters:', newFilters); // ← добавить
-      
       const response = await campersApi.getCampers(newFilters);
       
-      console.log('Received campers:', response); // ← добавить
+      // Для MockAPI определяем hasMore по количеству полученных элементов
+      const receivedCount = response.length;
+      const limit = newFilters.limit || 4;
       
       set({
         filteredCampers: response,
         filters: newFilters,
         isLoading: false,
         currentPage: 1,
-        hasMore: response.length >= newFilters.limit!,
+        hasMore: receivedCount >= limit, // Если получили меньше limit - это последняя страница
       });
     } catch (error) {
-      console.error('Error fetching campers:', error); // ← добавить
       set({ 
         error: 'Failed to fetch campers', 
         isLoading: false 
@@ -69,7 +69,6 @@ export const useCampersStore = create<CampersState>((set, get) => ({
     }
   },
 
-  
   fetchCamperById: async (id: string) => {
     set({ isLoading: true, error: null });
     
@@ -106,11 +105,19 @@ export const useCampersStore = create<CampersState>((set, get) => ({
         page: nextPage,
       });
 
-      if (response.length > filteredCampers.length) {
+      if (response.length > 0) {
+        const limit = filters.limit || 4;
+        const allCampers = [...filteredCampers, ...response];
+        
+        // Убираем дубликаты по ID
+        const uniqueCampers = allCampers.filter((camper, index, self) => 
+          index === self.findIndex(c => c.id === camper.id)
+        );
+        
         set({
-          filteredCampers: response,
+          filteredCampers: uniqueCampers,
           currentPage: nextPage,
-          hasMore: response.length - filteredCampers.length === filters.limit!,
+          hasMore: response.length >= limit,
           isLoading: false,
         });
       } else {

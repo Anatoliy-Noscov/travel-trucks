@@ -6,7 +6,7 @@ import Header from '@/components/Header/Header';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'TravelTrucks',
+  title: 'TravelTrucks - Camper Rental',
   description: 'Find your perfect camper for an unforgettable journey',
   icons: {
     icon: '/images/favicon.png'
