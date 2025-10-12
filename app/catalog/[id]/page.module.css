@@ -25,7 +25,6 @@
   font-weight: 500;
 }
 
-/* Заголовок кемпера */
 .camperHeader {
   margin-bottom: 28px;
   width: 1312px;
@@ -37,9 +36,8 @@ height: 112px;
   color: var(--main);
   margin-bottom: 8px;
   font-family: var(--font-family);
-
-font-size: 24px;
-line-height: 133%;
+  font-size: 24px;
+  line-height: 133%;
 }
 
 .camperMeta {
@@ -95,32 +93,27 @@ line-height: 133%;
   color: var(--main);
 }
 
-
-
 .description {
   font-size: 16px;
   line-height: 150%;
   color: var(--text);
   font-family: var(--font-family);
   font-weight: 400;
-
-height: 48px; /* жесткая высота */
-overflow-y: auto;
-/* margin-bottom: 60px; */
+  height: 48px; 
+  overflow-y: auto;
 }
 
 .content {
   display: flex;
-  gap: 64px;
+  gap: 40px;
   align-items: flex-start;
 }
 
 .leftColumn {
   border-radius: 10px;
-padding: 44px 80px;
-width: 631px;
-height: 588px;
-background: var(--inputs);
+  width: 631px;
+  height: 588px;
+  background: var(--inputs);
 }
 
 .rightColumn {
@@ -131,23 +124,18 @@ background: var(--inputs);
   height: 588px;
 }
 
-/* Галерея */
 .gallery {
- 
   margin-bottom: 28px;
   width: 100%;
 
 }
 
 .galleryContainer {
-
-display: flex;
-gap: 48px;
-width: 100%;
-height: 312px;
+  display: flex;
+  gap: 48px;
+  width: 100%;
+  height: 312px;
 }
-
-
 
 .galleryImage {
   width: 292px;
@@ -176,8 +164,6 @@ height: 312px;
   color: var(--text);
   font-family: var(--font-family);
 }
-
-
 
 .thumbnails {
   display: flex;
@@ -216,21 +202,18 @@ height: 312px;
   font-family: var(--font-family);
 }
 
-/* Табы */
-.tabs {
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
+
+.features {
+  padding: 44px;
+
 }
 
 .tabHeaders {
   display: flex;
-  /* border-bottom: 1px solid var(--gray-light); */
-  /* margin-top: 60px; */
+  border-bottom: 1px solid var(--gray-light);
   margin-bottom: 44px;
   width: 1312px;
-height: 48px;
-position: relative;
+  position: relative;
 }
 
 .tabLine {
@@ -241,9 +224,7 @@ position: relative;
   z-index: 1;
 }
 
-
 .tabHeader {
-  padding: 24px 0;
   background: none;
   border: none;
   font-size: 20px;
@@ -251,13 +232,15 @@ position: relative;
   color: var(--text);
   cursor: pointer;
   transition: all 0.3s ease;
+
   border-bottom: 5px solid transparent;
   margin-right: 32px;
   font-family: var(--font-family);
 
-line-height: 120%;
-position: relative;
-z-index: 2;
+  line-height: 120%;
+  position: relative;
+  z-index: 2;
+  height: 48px;
 }
 
 .tabHeader:hover {
@@ -269,34 +252,10 @@ z-index: 2;
   border-bottom-color: var(--button);
 }
 
-.tabContent {
-  padding: 48px 32px;
-}
-
-/* Особенности - Details */
-.features h3 {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--main);
-  margin-bottom: 48px;
-  font-family: var(--font-family);
-}
-
-.detailsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 48px;
-  padding: 24px;
-  background: var(--badges);
-  border-radius: 10px;
-}
-
 .detailItem {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  border-bottom: 1px solid rgba(16, 24, 40, 0.1);
 }
 
 .detailItem:last-child {
@@ -314,6 +273,11 @@ z-index: 2;
   color: var(--main);
   font-family: var(--font-family);
 }
+.containerFeaturesGrid {
+  width: 527px;
+  height: 104px;
+  margin-bottom: 100px;
+}
 
 .featuresGrid {
   display: flex;
@@ -329,33 +293,38 @@ z-index: 2;
   color: var(--main);
   font-weight: 500;
   font-family: var(--font-family);
+  
+
+  mix-blend-mode: multiply;
+  width: 143px;
+  height: 48px;
+
+  line-height: 150%;
+  text-align: center;
+
+  display: inline-block; 
+  width: auto;
+  display: flex;
+  gap: 8px;
 }
 
-/* Отзывы - Reviews */
-.reviews h3 {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--main);
-  margin-bottom: 48px;
-  font-family: var(--font-family);
+.linearDetails {
+  stroke-width: 1px;
+  stroke: var(--gray-light);
 }
 
 .reviewsList {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-}
-
-.review {
-  padding: 0;
-  background: transparent;
+  gap: 44px;
+  width: 631px;
+  height: 148px;
 }
 
 .reviewHeader {
-  display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .reviewerName {
@@ -380,29 +349,23 @@ z-index: 2;
   font-family: var(--font-family);
 }
 
-
-
-
-
 .titleBook{
   font-weight: 600;
-font-size: 20px;
-line-height: 120%;
-color: var(--main);
-font-family: var(--font-family);
-margin-bottom: 8px;
+  font-size: 20px;
+  line-height: 120%;
+  color: var(--main);
+  font-family: var(--font-family);
+  margin-bottom: 8px;
 
 }
 
 .textBook {
   font-weight: 400;
-font-size: 16px;
-line-height: 150%;
-color: var(--gray);
-font-family: var(--font-family);
-
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--gray);
+  font-family: var(--font-family);
 }
-
 
 .bookingForm {
   margin-top: 24px;
@@ -411,11 +374,9 @@ font-family: var(--font-family);
 .formGroup {
   margin-bottom: 14px;
   border-radius: 12px;
-width: 527px;
-height: 60px;
-
+  width: 527px;
+  height: 60px;
 }
-
 
 .formGroup label {
   display: block;
@@ -451,13 +412,10 @@ height: 60px;
   min-height: 114px;
 }
 
-
-
 .bookButton {
   min-width: 166px;
   height: 56px;
   background: var(--button);
-
   padding: 16px 60px;
   border-radius: 200px;
   font-weight: 500;
@@ -471,11 +429,8 @@ height: 60px;
   margin-top: 24px; 
   align-self: flex-start;
   cursor: pointer;
-  margin-top: 64px;
-
-  
+  margin-top: 64px;  
 }
-
 
 .buttonContainer {
   display: flex;
@@ -483,7 +438,6 @@ height: 60px;
   width: 100%;
   margin-top: 24px;
 }
-
 
 .bookButton:hover {
   background-color: #D84343;
@@ -495,22 +449,3 @@ height: 60px;
 }
 
 
-
-/* .bookButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-} */
-
-/* .bookButton:disabled:hover {
-  background-color: #ccc;
-} */
-
-
-  /* .tabHeader {
-    margin-right: 0;
-    text-align: left;
-  } */
-  
-  .tabContent {
-    padding: 24px 16px;
-  }
