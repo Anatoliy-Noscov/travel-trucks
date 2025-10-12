@@ -20,7 +20,7 @@ export interface Camper {
   tank: string;
   consumption: string;
   description: string;
-  gallery: GalleryImage[]; // ← изменяем на массив объектов
+  gallery: GalleryImage[]; 
   reviews: Review[];
   details: Details;
   AC: boolean;
@@ -73,31 +73,4 @@ export interface FilterParams {
     limit?: number;
   }
 
-// export interface Camper {
-//     id: string;
-//     name: string;
-//     price: number;
-//     location: string;
-//     description: string;
-//     adults: number;
-//     engine: string;
-//     transmission: string;
-//     AC: boolean;
-//     bathroom: boolean;
-//     kitchen: boolean;
-//     TV: boolean;
-//     radio: boolean;
-//     refrigerator: boolean;
-//     microwave: boolean;
-//     gas: boolean;
-//     water: boolean;
-//     form: string;
-//     length: string;
-//     width: string;
-//     height: string;
-//     tank: string;
-//     consumption: string;
-//     reviews: Review[];
-//     gallery: string[];
-//   }
   

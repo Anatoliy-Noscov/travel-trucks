@@ -1,8 +1,6 @@
 .header {
-
     border-bottom: 1px solid var(--badges);
     padding: 24px 64px;
-    /* width: 1440px; */
     height: 72px;
     background: var(--inputs);
     position: relative;
@@ -12,10 +10,8 @@
 }
 
 .container {
-    /* max-width: 1200px; */
     margin: 0 auto;
     padding: 0 ;
- 
 }
 
 .logo {
@@ -27,12 +23,9 @@
     transition: opacity 0.3s ease;
 }
 
-
 .nav {
     width: 138px;
-    /* height: 24px; */
-    /* display: flex; */
-    gap: 32px; /* расстояние между ссылками */
+    gap: 32px;
     justify-content: center;
 }
 
@@ -48,9 +41,8 @@
 }
 
 .navLink.active {
-    color: #E44848; /* или твой --button-hover цвет */
+    color: #E44848;
   }
-
 
 .textNav {
     font-family: var(--font-family);
@@ -61,6 +53,3 @@
     color: var(--main);
 }
 
-/* .textNav:hover {
-    color: var(--button-hover);
-} */

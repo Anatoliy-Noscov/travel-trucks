@@ -1,7 +1,5 @@
 .filters {
     height: 752px;
-
-    
   }
   
   .section {
@@ -22,34 +20,14 @@
   }
   
   .inputGroup {
-    /* margin-bottom: 18px; */
-    /* border-radius: 12px; */
-    /* padding: 18px 218px 18px 20px; */
     width: 360px;
     height: 56px;
     background: var(--inputs);
   }
   
   .input {
-    
-    /* width: 100%;
-    padding: 16px 20px;
-    border: 1px solid #e4e4e4;
-    border-radius: 10px;
-    font-size: 16px;
-    color: #101828;
-    background: var(--inputs);
-
-    transition: border-color 0.3s ease;
-
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 150%;
-    color: var(--main);
-    font-family: var(--font-family); */
-
     width: 100%;
-    padding: 16px 20px 16px 44px; /* увеличиваем left padding */
+    padding: 16px 20px 16px 44px;
     border: 1px solid #e4e4e4;
     border-radius: 10px;
     font-size: 16px;
@@ -60,7 +38,6 @@
     color: var(--main);
     font-family: var(--font-family);
     
-    /* Добавляем иконку */
     background-image: url('/images/Map.svg');
     background-repeat: no-repeat;
     background-position: 16px center;
@@ -77,9 +54,7 @@
   }
   
   .subsection {
-    /* margin-bottom: 32px; */
     width: 360px;
-    /* height: 168px; */
     margin-top: 32px;
   }
   
@@ -93,11 +68,8 @@
     line-height: 120%;
     color: var(--main);
     font-family: var(--font-family);
-
-  /* margin-bottom: 24px; */
   }
 
-  
   .checkboxGroup {
     display: flex;
     flex-wrap: wrap;
@@ -114,33 +86,20 @@
   
   .checkboxLabel,
   .radioLabel {
-    /* display: flex; */
-    /* align-items: center; */
-    /* gap: 12px; */
-    /* cursor: pointer; */
-    /* padding: 4px 0; */
-
-    /* mix-blend-mode: multiply;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     border: 1px solid var(--gray-light);
     border-radius: 12px;
     padding: 16px 18px;
     width: 112px;
-    height: 96px; */
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: 1px solid var(--gray-light);
-  border-radius: 12px;
-  padding: 16px 18px;
-  width: 112px;
-  height: 96px;
-  mix-blend-mode: multiply;
-  transition: all 0.3s ease;
-  position: relative;
-  background: white;
+    height: 96px;
+    mix-blend-mode: multiply;
+    transition: all 0.3s ease;
+    position: relative;
+    background: white;
   }
   
   .checkbox,
@@ -148,7 +107,6 @@
     opacity: 0;
     width: 0;
     height: 0;
-
   }
   
   .checkbox:checked {
@@ -161,8 +119,6 @@
   transition: all 0.3s ease;
   }
   
-  
- 
   .checkboxText,
   .radioText {
   font-weight: 500;
@@ -175,20 +131,14 @@
   transition: color 0.3s ease;
   }
   
-
-
   .checkboxLabel:has(.checkbox:checked),
-.radioLabel:has(.radio:checked) {
+  .radioLabel:has(.radio:checked) {
     border: 1px solid var(--button);
     border-radius: 12px;
     padding: 16px 18px;
     width: 112px;
     height: 96px;
 }
-
-
-
-
   
   .searchButton {
     width: 166px;
@@ -203,10 +153,8 @@
     letter-spacing: -0.01em;
     color: var(--white);
     font-family: var(--font-family);
-
   }
 
-  
   .searchButton:hover {
     background-color: #D84343;
   }

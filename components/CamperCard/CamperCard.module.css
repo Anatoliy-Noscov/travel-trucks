@@ -1,27 +1,15 @@
 .card {
     background: #fff;
     border-radius: 20px;
-    /* overflow: hidden; */
-    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); */
-    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
     position: relative;
-
-
     border: 1px solid var(--gray-light);
     padding: 24px;
-    /* width: 888px; */
-    /* height: 368px; */
     background: var(--white);
 
     display: flex;
-    flex-direction: row; /* элементы в строку (рядом) */
+    flex-direction: row;
     gap: 24px;
     align-items: flex-start;
-  }
-  
-  .card:hover {
-    /* transform: translateY(-4px); */
-    /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); */
   }
   
   .imageContainer {
@@ -37,33 +25,6 @@
     height: 320px;
     object-fit: cover;
   }
-
-  /* .favoriteButton {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(4px);
-  } */
-
-  /* .favoriteButton {
-    background: rgba(255, 255, 255, 1);
-    transform: scale(1.1);
-  }
-
-  .favoriteActive {
-    background: rgba(255, 255, 255, 1);
-
-  } */
   
   .content {
     width: 524px;
@@ -71,7 +32,7 @@
 
     display: flex;
     flex-direction: column;
-    position: relative; /* важно для абсолютного позиционирования */
+    position: relative;
     min-height: 300px; 
   }
   
@@ -101,12 +62,9 @@
 
     white-space: nowrap;      
     overflow: hidden;         
-
     flex: 1; 
-    
     white-space: nowrap;      
     overflow: hidden;         
-    /* text-overflow: ellipsis; */
     margin-bottom: 0;
   }
   
@@ -131,7 +89,6 @@
   
   .meta {
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
     margin-bottom: 16px;
   }
@@ -139,7 +96,6 @@
   .rating {
     display: flex;
     align-items: center;
-    /* gap: 8px; */
 
     color: #101828;
     font-weight: 400;
@@ -154,7 +110,6 @@
   .star {
     font-size: 18px;
     text-decoration: none;
-
   }
   
   .reviews {
@@ -202,11 +157,7 @@
     line-height: 150%;
     text-align: center;
     color: var(--main);
-
-    /* height: 104px; */
     overflow-y: auto;
-    /* overflow: hidden; */
-    /* overflow: hidden; */
     
   }
   
@@ -225,10 +176,9 @@
     color: var(--main);
     font-family: var(--font-family);
 
-    display: inline-block; /* или inline-flex */
+    display: inline-block;
     width: auto;
     display: flex;
-    /* align-items: center; */
     gap: 8px;
   }
   

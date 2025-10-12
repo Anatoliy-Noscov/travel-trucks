@@ -17,14 +17,12 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* gap: 24px; */
   }
   
   .loadMore {
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /* align-self: center; */
     margin-top: 40px;
 
     border: 1px solid var(--gray-light);
@@ -78,7 +76,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* gap: 24px; */
   }
   
   .campersGrid {
@@ -88,7 +85,6 @@
     gap: 32px;
   }
  
-  
   .noResults {
     text-align: center;
     padding: 60px 20px;
@@ -106,7 +102,6 @@
     justify-content: center;
     margin-top: 20px;
   }
-
   
   .endMessage {
     text-align: center;
@@ -116,22 +111,8 @@
     margin-top: 20px;
   }
   
-  
   .endMessage p {
     margin: 0;
     font-size: 16px;
     font-style: italic;
-  }
-  
-  /* Адаптивность */
-  @media (max-width: 968px) {
-    .content {
-      flex-direction: column;
-      gap: 32px;
-    }
-    
-    .filters {
-      flex: none;
-      width: 100%;
-    }
   }

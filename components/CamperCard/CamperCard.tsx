@@ -23,28 +23,24 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
   const {favorites, toggleFavorite} = useFavoritesStore();
   const isFavorite = favorites.some(fav => fav.id === camper.id);
 
-  // const {toggleFavorite, isFavorite} = useFavoritesStore();
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     toggleFavorite(camper);
   }
 
-  // Правильно обрабатываем gallery как массив объектов
   const getImageUrl = () => {
     if (camper.gallery && 
         Array.isArray(camper.gallery) && 
         camper.gallery.length > 0 && 
         camper.gallery[0].original) {
-      return camper.gallery[0].original; // ← используем original
+      return camper.gallery[0].original; 
     }
     
-    // Fallback изображение
     return '/images/hero.jpg';
   };
 
   const imageUrl = getImageUrl();
-  // const favorite = isFavorite(camper.id);
 
   return (
     <div className={styles.card}>
@@ -65,23 +61,22 @@ const CamperCard: React.FC<CamperCardProps> = ({ camper }) => {
           <h3 className={styles.title}>{camper.name}</h3>
 
           <div className={styles.headerHeart}>
-          <div className={styles.price}>
-            <span className={styles.priceValue}>€{camper.price.toFixed(2)}</span>
-            <button 
-            className={`${styles.favoriteButton} ${isFavorite ? styles.favoriteActive : ""}`}
-            onClick={handleFavoriteClick}
-            aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-          >
-            {isFavorite ? (
-              <img src="/images/HeartActive.svg" alt="Active heart" width="24" height="21"/>
-            ) : (
-              <img src="/images/Heart.svg" alt="Heart" width="24" height="21"/>
-            )}
-          </button>
-          </div>
+            <div className={styles.price}>
+              <span className={styles.priceValue}>€{camper.price.toFixed(2)}</span>
+                <button 
+                className={`${styles.favoriteButton} ${isFavorite ? styles.favoriteActive : ""}`}
+                onClick={handleFavoriteClick}
+                aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+              >
+                {isFavorite ? (
+                  <img src="/images/HeartActive.svg" alt="Active heart" width="24" height="21"/>
+                ) : (
+                  <img src="/images/Heart.svg" alt="Heart" width="24" height="21"/>
+                )}
+              </button>
+            </div>
         
           </div>
-          
         </div>
         
         <div className={styles.meta}>

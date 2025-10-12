@@ -64,7 +64,7 @@ export default function Catalog() {
 
               {!hasMore && filteredCampers.length > 0 && (
                 <div className={styles.endMessage}>
-                  <p>You've reached the end of the list</p>
+                  <p>You reached the end of the list</p>
                 </div>
               )}
             </>

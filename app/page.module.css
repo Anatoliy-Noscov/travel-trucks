@@ -11,14 +11,12 @@
   min-height: 600px;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
-  /* text-align: center; */
   padding: 40px 20px;
 }
 
 .heroContent {
   width: 571px;
-height: 176px;
+  height: 176px;
 }
 
 .heroTitle {
@@ -53,8 +51,6 @@ height: 176px;
   padding: 16px 60px;
   width: 173px;
   height: 56px;
-  
-
 }
 
 .heroButton:hover {
@@ -69,9 +65,9 @@ height: 176px;
 .textButton {
   font-family: var(--font-family);
   font-weight: 500;
-font-size: 16px;
-line-height: 150%;
-letter-spacing: -0.01em;
-color: var(--white);
-white-space: nowrap;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  white-space: nowrap;
 }

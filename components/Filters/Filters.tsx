@@ -5,7 +5,6 @@ import styles from '@/components/Filters/Filters.module.css';
 import {useCampersStore} from '@/store/useCampersStore';
 
 const Filters: React.FC = () => {
-
     const {filters, setFilters, fetchCampers} = useCampersStore();
 
     const handleInputChange = (field: string, value: string | boolean) => {
@@ -28,9 +27,7 @@ const Filters: React.FC = () => {
             <div className={styles.section}>
                 <h3 className={styles.sectionTitle}>Location</h3>
                 <div className={styles.inputGroup}>
-                
                     <input 
-                    
                     type="text"
                     placeholder="Kyiv, Ukraine"
                     className={styles.input} 
@@ -40,7 +37,6 @@ const Filters: React.FC = () => {
                 </div>
             </div>
 
-
             {/*section Filter*/}
             <div className={styles.section}>
                 <h3 className={styles.sectionTitle}>Filters</h3>
@@ -49,17 +45,16 @@ const Filters: React.FC = () => {
                 <div className={styles.subsection}>
                     <h4 className={styles.subsectionTitle}>Vehicle equipment</h4>
                     <svg width="360" height="2" viewBox="0 0 360 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M0 1H360" stroke="#DADDE1" />
-</svg>
+                        <path d="M0 1H360" stroke="#DADDE1" />
+                    </svg>
                     <div className={styles.checkboxGroup}>
-
                         <label className={styles.checkboxLabel}>
                             <input 
                             type="checkbox" 
                             className={styles.checkbox} 
                             checked={filters.AC || false} 
                             onChange={(e) => handleInputChange('AC', e.target.checked)}/>
-                            <img src="/icons/conditioner.svg" alt="icon" width="32" height="32"/>
+                            <img src="/icons/conditioner.svg" alt="AC" width="32" height="32"/>
                             <span className={styles.checkboxText}>AC</span>
                         </label>
 
@@ -69,7 +64,7 @@ const Filters: React.FC = () => {
                             className={styles.checkbox} 
                             checked={filters.transmission === 'automatic'}
                             onChange={(e) => handleInputChange('transmission', e.target.checked ? 'automatic' : '')}/>
-                            <img src="/icons/APP.svg" alt="icon" width="32" height="32"/>
+                            <img src="/icons/APP.svg" alt="Automatic" width="32" height="32"/>
                             <span className={styles.checkboxText}>Automatic</span>
                         </label>
 
@@ -80,7 +75,7 @@ const Filters: React.FC = () => {
                             checked={filters.kitchen || false}
                             onChange={(e) => handleInputChange('kitchen', e.target.checked)}
                             />
-                            <img src="/icons/Cip.svg" alt="icon" width="32" height="32"/>
+                            <img src="/icons/Cip.svg" alt="Kitchen" width="32" height="32"/>
                             <span className={styles.checkboxText}>Kitchen</span>
                         </label>
 
@@ -91,7 +86,7 @@ const Filters: React.FC = () => {
                             checked={filters.TV || false}
                             onChange={(e) => handleInputChange('TV', e.target.checked)}
                             />
-                            <img src="/icons/tv.svg" alt="icon" width="32" height="32"/>
+                            <img src="/icons/tv.svg" alt="TV" width="32" height="32"/>
                             <span className={styles.checkboxText}>TV</span>
                         </label>
 
@@ -102,7 +97,7 @@ const Filters: React.FC = () => {
                             checked={filters.bathroom || false}
                             onChange={(e) => handleInputChange('bathroom', e.target.checked)}
                             />
-                            <img src="/icons/bathrom.svg" alt="icon" width="32" height="32"/>
+                            <img src="/icons/bathrom.svg" alt="Bathroom" width="32" height="32"/>
                             <span className={styles.checkboxText}>Bathroom</span>
                         </label>
                     </div>
@@ -112,10 +107,9 @@ const Filters: React.FC = () => {
                 <div className={styles.subsection}>
                     <h4 className={styles.subsectionTitle}>Vehicle type</h4>
                     <svg width="360" height="2" viewBox="0 0 360 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M0 1H360" stroke="#DADDE1" />
-</svg>
+                        <path d="M0 1H360" stroke="#DADDE1" />
+                    </svg>
                     <div className={styles.radioGroup}>
-
                         <label className={styles.radioLabel}>
                             <input 
                             type="radio" 
@@ -123,7 +117,7 @@ const Filters: React.FC = () => {
                             className={styles.radio}
                             checked={filters.form === "van"}
                             onChange={() => handleRadioChange('van')}/>
-                            <img src="/icons/bi_grid-1x2.svg" alt="icon" width="32" height="32"/>
+                            <img src="/icons/bi_grid-1x2.svg" alt="Van" width="32" height="32"/>
                             <span className={styles.radioText}>Van</span>
                         </label>
 
@@ -134,7 +128,7 @@ const Filters: React.FC = () => {
                             className={styles.radio}
                             checked={filters.form === 'fullyIntegrated'} 
                             onChange={() => handleRadioChange('fullyIntegrated')}/>
-                            <img src="/icons/bi_grid1x4.svg" alt="icon" width="32" height="32"/>
+                            <img src="/icons/bi_grid1x4.svg" alt="Fully Integrated" width="32" height="32"/>
                             <span className={styles.radioText}>Fully Integrated</span>
                         </label>
 
@@ -143,9 +137,9 @@ const Filters: React.FC = () => {
                             type="radio" 
                             name="vehicleType" 
                             className={styles.radio}
-                            checked={filters.form === 'fullyIntegrated'}
+                            checked={filters.form === 'alcove'}
                             onChange={() => handleRadioChange('alcove')}/>
-                            <img src="/icons/APP.svg" alt="icon" width="32" height="32"/>
+                            <img src="/icons/APP.svg" alt="Alcove" width="32" height="32"/>
                             <span className={styles.radioText}>Alcove</span>
                         </label>
                     </div>
@@ -153,7 +147,6 @@ const Filters: React.FC = () => {
             </div>
 
             {/* button */}
-
             <button className={styles.searchButton} onClick={handleSearch}>
                 Search
             </button>

@@ -202,10 +202,8 @@ height: 112px;
   font-family: var(--font-family);
 }
 
-
 .features {
   padding: 44px;
-
 }
 
 .tabHeaders {
@@ -214,6 +212,7 @@ height: 112px;
   margin-bottom: 44px;
   width: 1312px;
   position: relative;
+  margin-top: 60px;
 }
 
 .tabLine {

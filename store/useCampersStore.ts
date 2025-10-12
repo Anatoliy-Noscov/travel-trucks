@@ -50,7 +50,6 @@ export const useCampersStore = create<CampersState>((set, get) => ({
       
       const response = await campersApi.getCampers(newFilters);
       
-      // Для MockAPI определяем hasMore по количеству полученных элементов
       const receivedCount = response.length;
       const limit = newFilters.limit || 4;
       
@@ -59,7 +58,7 @@ export const useCampersStore = create<CampersState>((set, get) => ({
         filters: newFilters,
         isLoading: false,
         currentPage: 1,
-        hasMore: receivedCount >= limit, // Если получили меньше limit - это последняя страница
+        hasMore: receivedCount >= limit, 
       });
     } catch (error) {
       set({ 
@@ -109,7 +108,6 @@ export const useCampersStore = create<CampersState>((set, get) => ({
         const limit = filters.limit || 4;
         const allCampers = [...filteredCampers, ...response];
         
-        // Убираем дубликаты по ID
         const uniqueCampers = allCampers.filter((camper, index, self) => 
           index === self.findIndex(c => c.id === camper.id)
         );

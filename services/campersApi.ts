@@ -1,35 +1,32 @@
 import { api } from './api';
 import { Camper, FilterParams } from '@/types/campers';
 
+interface MockApiResponse {
+  items?: Camper[];
+}
+
 export const campersApi = {
   getCampers: async (params: FilterParams = {}): Promise<Camper[]> => {
     const { page = 1, limit = 4, ...filters } = params;
 
-    // MockAPI поддерживает только простые текстовые фильтры
-    const queryParams: any = {
+    const queryParams = {
       page,
       limit,
+      ...(filters.location && { location: filters.location }),
+      ...(filters.form && { form: filters.form }),
     };
-    
-    // Добавляем только те фильтры, которые поддерживает MockAPI
-    if (filters.location) {
-      queryParams.location = filters.location;
-    }
 
-    if (filters.form) {
-      queryParams.form = filters.form;
-    }
-
-    const response = await api.get<Camper[]>('/campers', { params: queryParams });
+    const response = await api.get<Camper[] | MockApiResponse>('/campers', { 
+      params: queryParams 
+    });
     
-    // Обрабатываем ответ API
-    const apiData = response.data as any;
-    const campersData = apiData.items || apiData;
+    const apiData = response.data;
+    const campersData = Array.isArray(apiData) 
+      ? apiData 
+      : (apiData as MockApiResponse).items || [];
     
     let filteredData = Array.isArray(campersData) ? campersData : [];
     
-    // Применяем булевые фильтры на фронтенде
-    // (MockAPI не поддерживает фильтрацию по булевым полям)
     if (filters.AC) {
       filteredData = filteredData.filter(camper => camper.AC);
     }
