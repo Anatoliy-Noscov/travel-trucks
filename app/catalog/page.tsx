@@ -44,11 +44,14 @@ export default function Catalog() {
           ) : (
             <>
           
-              <div className={styles.campersGrid}>
+              <ul className={styles.campersGrid}>
                 {filteredCampers.map(camper => (
-                  <CamperCard key={camper.id} camper={camper} />
+                  <li key={camper.id}>
+                       <CamperCard  camper={camper} />
+                  </li>
+                 
                 ))}
-              </div>
+              </ul>
 
               {hasMore && (
                 <div className={styles.loadMoreContainer}>

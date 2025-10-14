@@ -147,10 +147,12 @@ export default function CamperDetails() {
                 <div className={styles.features}>
                 
                   <div className={styles.containerFeaturesGrid}>
-                  <div className={styles.featuresGrid}>
-                    {camper.transmission && <div className={styles.featureItem}>
+
+
+                  <ul className={styles.featuresGrid}>
+                    {camper.transmission && <li className={styles.featureItem}>
                     <img src="/images/Automatic.svg" alt="icon" width="20" height="20"/>
-                      {camper.transmission}</div>}
+                      {camper.transmission}</li>}
                     {camper.engine && <div className={styles.featureItem}>
                     <img src="/images/Petrol.svg" alt="icon" width="20" height="20"/>
                       {camper.engine}</div>}
@@ -190,7 +192,7 @@ export default function CamperDetails() {
                     {camper.water && <div className={styles.featureItem}>
                     <img src="/images/Water.svg" alt="icon" width="20" height="20"/>
                       Water</div>}
-                  </div>
+                  </ul>
                   </div>
 
                   <h3 className={styles.titleBook}>Vehicle Details</h3>
