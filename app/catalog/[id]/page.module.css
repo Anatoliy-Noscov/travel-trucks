@@ -279,9 +279,6 @@ height: 112px;
 }
 
 .featuresGrid {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -449,5 +446,139 @@ height: 112px;
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+
+/* Стили для поля с датой и календарем */
+.dateInputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.dateInput {
+  width: 100%;
+  padding: 18px 50px 18px 18px;
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--main);
+  background: var(--inputs);
+  transition: border-color 0.3s ease;
+  font-family: var(--font-family);
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 60px;
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: var(--button);
+}
+
+.dateInput::placeholder {
+  color: var(--gray);
+}
+
+.dateIcon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--gray);
+  width: 20px;
+  height: 20px;
+}
+
+/* Кастомизация нативного календаря */
+.dateInput::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+  opacity: 0;
+}
+
+/* Стили для состояния placeholder когда дата не выбрана */
+.dateInput:not(:valid) {
+  color: var(--gray);
+}
+
+/* Для Firefox */
+.dateInput {
+  -moz-appearance: textfield;
+}
+
+.dateInput::-moz-focus-inner {
+  border: 0;
+}
+
+/* Стили для текстового поля */
+.formGroup textarea {
+  resize: vertical;
+  min-height: 114px;
+  font-family: var(--font-family);
+}
+
+/* Убедитесь, что все поля формы имеют одинаковую высоту */
+.formGroup input:not(.dateInput) {
+  height: 60px;
+}
+
+
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.bookButton:hover:not(:disabled) {
+  background-color: #D84343;
+}
+
+.bookButton:disabled {
+  background-color: var(--gray-light);
+  cursor: not-allowed;
+  color: var(--gray);
+}
+
+
+
+.dateIcon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--gray);
+  width: 20px;
+  height: 20px;
+  display: none; /* По умолчанию скрыта */
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

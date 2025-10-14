@@ -24,9 +24,16 @@ Modern web application for renting campers and motorhomes. Browse, filter, and b
 
 1. Clone the repository:
 ```bash
-git clone <https://github.com/Anatoliy-Noscov/travel-trucks>
+git clone https://github.com/Anatoliy-Noscov/travel-trucks
 
-Your Anatoliy-Noscov
+2. Install dependencies:
+npm install
+
+3. Run the development server:
+npm run dev
+
+Author
+Anatoliy Noscov
 
 GitHub: https://github.com/Anatoliy-Noscov
 
