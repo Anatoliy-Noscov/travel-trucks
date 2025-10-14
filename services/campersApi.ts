@@ -1,59 +1,96 @@
 import { api } from './api';
 import { Camper, FilterParams } from '@/types/campers';
 
-interface MockApiResponse {
-  items?: Camper[];
+interface ApiResponse {
+  total: number;
+  items: Camper[];
 }
 
 export const campersApi = {
   getCampers: async (params: FilterParams = {}): Promise<Camper[]> => {
     const { page = 1, limit = 4, ...filters } = params;
 
-    const queryParams = {
+    // Создаем query параметры для API
+    const queryParams: any = {
       page,
       limit,
-      ...(filters.location && { location: filters.location }),
-      ...(filters.form && { form: filters.form }),
     };
 
-    const response = await api.get<Camper[] | MockApiResponse>('/campers', { 
-      params: queryParams 
-    });
-    
-    const apiData = response.data;
-    const campersData = Array.isArray(apiData) 
-      ? apiData 
-      : (apiData as MockApiResponse).items || [];
-    
-    let filteredData = Array.isArray(campersData) ? campersData : [];
-    
-    if (filters.AC) {
-      filteredData = filteredData.filter(camper => camper.AC);
+    // Добавляем фильтры только если они есть
+    if (filters.location && filters.location.trim() !== '') {
+      queryParams.location = filters.location;
     }
-    
-    if (filters.kitchen) {
-      filteredData = filteredData.filter(camper => camper.kitchen);
+
+    if (filters.form && filters.form.trim() !== '') {
+      queryParams.form = filters.form;
     }
+
+    // Для boolean фильтров передаем как строки
+    if (filters.AC) queryParams.AC = 'true';
+    if (filters.kitchen) queryParams.kitchen = 'true';
+    if (filters.TV) queryParams.TV = 'true';
+    if (filters.bathroom) queryParams.bathroom = 'true';
     
-    if (filters.TV) {
-      filteredData = filteredData.filter(camper => camper.TV);
+    if (filters.transmission && filters.transmission.trim() !== '') {
+      queryParams.transmission = filters.transmission;
     }
-    
-    if (filters.bathroom) {
-      filteredData = filteredData.filter(camper => camper.bathroom);
+
+    console.log('🔄 Fetching campers from API with params:', queryParams);
+
+    try {
+      const response = await api.get<ApiResponse>('/campers', { 
+        params: queryParams 
+      });
+      
+      // API возвращает объект с полями total и items
+      const apiData = response.data;
+      const campersData = apiData?.items || [];
+      
+      console.log(`✅ Received ${campersData.length} campers for page ${page}, total: ${apiData?.total || 0}`);
+      
+      return campersData;
+    } catch (error: any) {
+      console.error('❌ Error fetching campers from API:', {
+        status: error.response?.status,
+        message: error.message,
+        url: error.config?.url
+      });
+      
+      // Если API недоступен, используем fallback - делаем запрос напрямую
+      try {
+        console.log('🔄 Trying direct fetch as fallback...');
+        const directResponse = await fetch(`https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers?page=${page}&limit=${limit}`);
+        if (directResponse.ok) {
+          const data = await directResponse.json();
+          console.log(`✅ Fallback successful: received ${data.items?.length || 0} campers`);
+          return data.items || data || [];
+        }
+      } catch (fallbackError) {
+        console.error('❌ Fallback also failed:', fallbackError);
+      }
+      
+      return [];
     }
-    
-    if (filters.transmission) {
-      filteredData = filteredData.filter(camper => 
-        camper.transmission === filters.transmission
-      );
-    }
-    
-    return filteredData;
   },
 
   getCamperById: async (id: string): Promise<Camper> => {
-    const response = await api.get<Camper>(`/campers/${id}`);
-    return response.data;
+    try {
+      const response = await api.get<Camper>(`/campers/${id}`);
+      return response.data;
+    } catch (error: any) {
+      console.error(`Error fetching camper ${id}:`, error);
+      
+      // Fallback для деталей кемпера
+      try {
+        const directResponse = await fetch(`https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers/${id}`);
+        if (directResponse.ok) {
+          return await directResponse.json();
+        }
+      } catch (fallbackError) {
+        console.error('Fallback for camper details failed:', fallbackError);
+      }
+      
+      throw error;
+    }
   },
 };

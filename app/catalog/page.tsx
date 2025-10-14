@@ -14,6 +14,7 @@ export default function Catalog() {
     hasMore, 
     loadMore, 
     fetchCampers, 
+    error
   } = useCampersStore();
 
   useEffect(() => {
@@ -21,7 +22,9 @@ export default function Catalog() {
   }, [fetchCampers]);
 
   const handleLoadMore = () => {
-    loadMore();
+    if (!isLoading && hasMore) {
+      loadMore();
+    }
   };
 
   if (isLoading && filteredCampers.length === 0) {
@@ -36,6 +39,13 @@ export default function Catalog() {
         </aside>
         
         <main className={styles.campers}>
+          {error && (
+            <div className={styles.error}>
+              <h3>Error loading campers</h3>
+              <p>{error}</p>
+            </div>
+          )}
+
           {filteredCampers.length === 0 && !isLoading ? (
             <div className={styles.noResults}>
               <h3>No campers found</h3>
@@ -43,15 +53,11 @@ export default function Catalog() {
             </div>
           ) : (
             <>
-          
-              <ul className={styles.campersGrid}>
+              <div className={styles.campersGrid}>
                 {filteredCampers.map(camper => (
-                  <li key={camper.id}>
-                       <CamperCard  camper={camper} />
-                  </li>
-                 
+                  <CamperCard key={camper.id} camper={camper} />
                 ))}
-              </ul>
+              </div>
 
               {hasMore && (
                 <div className={styles.loadMoreContainer}>
@@ -67,7 +73,7 @@ export default function Catalog() {
 
               {!hasMore && filteredCampers.length > 0 && (
                 <div className={styles.endMessage}>
-                  <p>You reached the end of the list</p>
+                  <p>Youve seen all available campers</p>
                 </div>
               )}
             </>

@@ -3,14 +3,12 @@ import { campersApi } from '@/services/campersApi';
 import { Camper, FilterParams } from '@/types/campers';
 
 interface CampersState {
-  campers: Camper[];
   filteredCampers: Camper[];
   isLoading: boolean;
   error: string | null;
   filters: FilterParams;
   currentPage: number;
   hasMore: boolean;
-  totalCount: number;
   
   fetchCampers: (params?: FilterParams, reset?: boolean) => Promise<void>;
   fetchCamperById: (id: string) => Promise<Camper | null>;
@@ -32,21 +30,19 @@ const initialFilters: FilterParams = {
 };
 
 export const useCampersStore = create<CampersState>((set, get) => ({
-  campers: [],
   filteredCampers: [],
   isLoading: false,
   error: null,
   filters: initialFilters,
   currentPage: 1,
   hasMore: true,
-  totalCount: 0,
 
   fetchCampers: async (params = {}, reset = false) => {
     set({ isLoading: true, error: null });
     
     try {
       const currentFilters = get().filters;
-      const newFilters = reset ? { ...initialFilters, ...params } : { ...currentFilters, ...params };
+      const newFilters = reset ? { ...initialFilters, ...params, page: 1 } : { ...currentFilters, ...params };
       
       const response = await campersApi.getCampers(newFilters);
       
@@ -57,13 +53,16 @@ export const useCampersStore = create<CampersState>((set, get) => ({
         filteredCampers: response,
         filters: newFilters,
         isLoading: false,
-        currentPage: 1,
-        hasMore: receivedCount >= limit, 
+        currentPage: newFilters.page || 1,
+        hasMore: receivedCount === limit, // Если получили полную страницу, значит есть еще данные
       });
+      
+      console.log(`📊 Store: received ${receivedCount}, hasMore: ${receivedCount === limit}`);
     } catch (error) {
       set({ 
         error: 'Failed to fetch campers', 
-        isLoading: false 
+        isLoading: false,
+        filteredCampers: []
       });
     }
   },
@@ -95,33 +94,42 @@ export const useCampersStore = create<CampersState>((set, get) => ({
   loadMore: async () => {
     const { filters, currentPage, filteredCampers } = get();
     
+    if (get().isLoading || !get().hasMore) return;
+    
     set({ isLoading: true });
     
     try {
       const nextPage = currentPage + 1;
+      console.log(`🔄 Loading more: page ${nextPage}`);
+      
       const response = await campersApi.getCampers({
         ...filters,
         page: nextPage,
       });
 
+      const receivedCount = response.length;
+      const limit = filters.limit || 4;
+      
       if (response.length > 0) {
-        const limit = filters.limit || 4;
         const allCampers = [...filteredCampers, ...response];
         
-        const uniqueCampers = allCampers.filter((camper, index, self) => 
-          index === self.findIndex(c => c.id === camper.id)
-        );
-        
         set({
-          filteredCampers: uniqueCampers,
+          filteredCampers: allCampers,
           currentPage: nextPage,
-          hasMore: response.length >= limit,
+          hasMore: receivedCount === limit,
           isLoading: false,
         });
+        
+        console.log(`✅ Loaded more: ${response.length} campers, total: ${allCampers.length}`);
       } else {
-        set({ hasMore: false, isLoading: false });
+        set({ 
+          hasMore: false, 
+          isLoading: false 
+        });
+        console.log('🏁 No more campers to load');
       }
     } catch (error) {
+      console.error('❌ Error loading more campers:', error);
       set({ 
         error: 'Failed to load more campers', 
         isLoading: false 
