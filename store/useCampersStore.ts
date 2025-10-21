@@ -3,18 +3,16 @@ import { campersApi } from '@/services/campersApi';
 import { Camper, FilterParams } from '@/types/campers';
 
 interface CampersState {
-  filteredCampers: Camper[];
+  campers: Camper[]; // Все кемперы с сервера
   isLoading: boolean;
   error: string | null;
   filters: FilterParams;
-  currentPage: number;
-  hasMore: boolean;
   
-  fetchCampers: (params?: FilterParams, reset?: boolean) => Promise<void>;
+  fetchCampers: () => Promise<void>;
   fetchCamperById: (id: string) => Promise<Camper | null>;
   setFilters: (filters: FilterParams) => void;
   resetFilters: () => void;
-  loadMore: () => Promise<void>;
+  getFilteredCampers: () => Camper[]; // Фильтрация на клиенте
 }
 
 const initialFilters: FilterParams = {
@@ -25,44 +23,30 @@ const initialFilters: FilterParams = {
   TV: false,
   bathroom: false,
   transmission: '',
-  page: 1,
-  limit: 4,
 };
 
 export const useCampersStore = create<CampersState>((set, get) => ({
-  filteredCampers: [],
+  campers: [],
   isLoading: false,
   error: null,
   filters: initialFilters,
-  currentPage: 1,
-  hasMore: true,
 
-  fetchCampers: async (params = {}, reset = false) => {
+  fetchCampers: async () => {
     set({ isLoading: true, error: null });
     
     try {
-      const currentFilters = get().filters;
-      const newFilters = reset ? { ...initialFilters, ...params, page: 1 } : { ...currentFilters, ...params };
-      
-      const response = await campersApi.getCampers(newFilters);
-      
-      const receivedCount = response.length;
-      const limit = newFilters.limit || 4;
-      
+      const campers = await campersApi.getCampers();
       set({
-        filteredCampers: response,
-        filters: newFilters,
+        campers,
         isLoading: false,
-        currentPage: newFilters.page || 1,
-        hasMore: receivedCount === limit, // Если получили полную страницу, значит есть еще данные
       });
       
-      console.log(`📊 Store: received ${receivedCount}, hasMore: ${receivedCount === limit}`);
+      console.log(`📊 Store: loaded ${campers.length} campers total`);
     } catch (error) {
       set({ 
         error: 'Failed to fetch campers', 
         isLoading: false,
-        filteredCampers: []
+        campers: []
       });
     }
   },
@@ -91,49 +75,43 @@ export const useCampersStore = create<CampersState>((set, get) => ({
     set({ filters: initialFilters });
   },
 
-  loadMore: async () => {
-    const { filters, currentPage, filteredCampers } = get();
+  getFilteredCampers: () => {
+    const { campers, filters } = get();
     
-    if (get().isLoading || !get().hasMore) return;
-    
-    set({ isLoading: true });
-    
-    try {
-      const nextPage = currentPage + 1;
-      console.log(`🔄 Loading more: page ${nextPage}`);
-      
-      const response = await campersApi.getCampers({
-        ...filters,
-        page: nextPage,
-      });
+    let filtered = [...campers];
 
-      const receivedCount = response.length;
-      const limit = filters.limit || 4;
-      
-      if (response.length > 0) {
-        const allCampers = [...filteredCampers, ...response];
-        
-        set({
-          filteredCampers: allCampers,
-          currentPage: nextPage,
-          hasMore: receivedCount === limit,
-          isLoading: false,
-        });
-        
-        console.log(`✅ Loaded more: ${response.length} campers, total: ${allCampers.length}`);
-      } else {
-        set({ 
-          hasMore: false, 
-          isLoading: false 
-        });
-        console.log('🏁 No more campers to load');
-      }
-    } catch (error) {
-      console.error('❌ Error loading more campers:', error);
-      set({ 
-        error: 'Failed to load more campers', 
-        isLoading: false 
-      });
+    // Фильтр по локации
+    if (filters.location && filters.location.trim() !== '') {
+      filtered = filtered.filter(camper => 
+        camper.location.toLowerCase().includes(filters.location!.toLowerCase())
+      );
     }
+
+    // Фильтр по типу транспортного средства
+    if (filters.form && filters.form.trim() !== '') {
+      filtered = filtered.filter(camper => camper.form === filters.form);
+    }
+
+    // Фильтр по трансмиссии
+    if (filters.transmission && filters.transmission.trim() !== '') {
+      filtered = filtered.filter(camper => camper.transmission === filters.transmission);
+    }
+
+    // Фильтр по оборудованию
+    if (filters.AC) {
+      filtered = filtered.filter(camper => camper.AC);
+    }
+    if (filters.kitchen) {
+      filtered = filtered.filter(camper => camper.kitchen);
+    }
+    if (filters.TV) {
+      filtered = filtered.filter(camper => camper.TV);
+    }
+    if (filters.bathroom) {
+      filtered = filtered.filter(camper => camper.bathroom);
+    }
+
+    console.log(`🔍 Filters applied: ${filtered.length} matches from ${campers.length} total`);
+    return filtered;
   },
 }));

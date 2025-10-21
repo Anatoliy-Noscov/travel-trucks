@@ -8,45 +8,25 @@ interface ApiResponse {
 
 export const campersApi = {
   getCampers: async (params: FilterParams = {}): Promise<Camper[]> => {
-    const { page = 1, limit = 4, ...filters } = params;
-
-    // Создаем query параметры для API
-    const queryParams: any = {
-      page,
-      limit,
-    };
-
-    // Добавляем фильтры только если они есть
-    if (filters.location && filters.location.trim() !== '') {
-      queryParams.location = filters.location;
-    }
-
-    if (filters.form && filters.form.trim() !== '') {
-      queryParams.form = filters.form;
-    }
-
-    // Для boolean фильтров передаем как строки
-    if (filters.AC) queryParams.AC = 'true';
-    if (filters.kitchen) queryParams.kitchen = 'true';
-    if (filters.TV) queryParams.TV = 'true';
-    if (filters.bathroom) queryParams.bathroom = 'true';
-    
-    if (filters.transmission && filters.transmission.trim() !== '') {
-      queryParams.transmission = filters.transmission;
-    }
-
-    console.log('🔄 Fetching campers from API with params:', queryParams);
+    console.log('🔄 Fetching ALL campers from API');
 
     try {
-      const response = await api.get<ApiResponse>('/campers', { 
-        params: queryParams 
-      });
+      // Делаем запрос БЕЗ пагинационных параметров, чтобы получить все данные
+      const response = await api.get<ApiResponse>('/campers');
       
       // API возвращает объект с полями total и items
       const apiData = response.data;
       const campersData = apiData?.items || [];
+
+      console.log('📋 API Response:', {
+        status: response.status,
+        dataStructure: apiData,
+        itemsCount: campersData.length,
+        firstItem: campersData[0]
+      });
+
       
-      console.log(`✅ Received ${campersData.length} campers for page ${page}, total: ${apiData?.total || 0}`);
+      console.log(`✅ Received ${campersData.length} campers total`);
       
       return campersData;
     } catch (error: any) {
@@ -56,14 +36,15 @@ export const campersApi = {
         url: error.config?.url
       });
       
-      // Если API недоступен, используем fallback - делаем запрос напрямую
+      // Fallback: пытаемся получить данные напрямую
       try {
         console.log('🔄 Trying direct fetch as fallback...');
-        const directResponse = await fetch(`https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers?page=${page}&limit=${limit}`);
+        const directResponse = await fetch('https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers');
         if (directResponse.ok) {
           const data = await directResponse.json();
-          console.log(`✅ Fallback successful: received ${data.items?.length || 0} campers`);
-          return data.items || data || [];
+          const items = data.items || data || [];
+          console.log(`✅ Fallback successful: received ${items.length} campers`);
+          return items;
         }
       } catch (fallbackError) {
         console.error('❌ Fallback also failed:', fallbackError);

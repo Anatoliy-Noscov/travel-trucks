@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
 import React from "react";
 import styles from '@/components/Filters/Filters.module.css';
 import {useCampersStore} from '@/store/useCampersStore';
 
 const Filters: React.FC = () => {
-    const {filters, setFilters, fetchCampers} = useCampersStore();
+    const {filters, setFilters} = useCampersStore();
 
     const handleInputChange = (field: string, value: string | boolean) => {
         const newFilters = {...filters, [field]: value};
@@ -13,7 +13,8 @@ const Filters: React.FC = () => {
     };
 
     const handleSearch = () => {
-        fetchCampers(filters, true);
+        // Фильтры применяются автоматически через getFilteredCampers
+        console.log('🔍 Applying filters...');
     };
 
     const handleRadioChange = (form: string) => {
