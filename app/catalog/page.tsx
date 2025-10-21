@@ -6,7 +6,7 @@ import styles from './page.module.css';
 import Filters from '@/components/Filters/Filters';
 import CamperCard from '@/components/CamperCard/CamperCard';
 import Loader from '@/components/Loader/Loader';
-import { Camper } from '@/types/campers';
+import { Camper, FilterParams } from '@/types/campers'; // Добавьте FilterParams здесь
 
 export default function Catalog() {
   const { 
@@ -115,6 +115,20 @@ export default function Catalog() {
             </div>
           )}
 
+          {/* Отладочная информация */}
+          <div style={{ 
+            marginBottom: '10px', 
+            padding: '8px 12px', 
+            backgroundColor: '#f8f9fa', 
+            borderRadius: '4px',
+            fontSize: '12px', 
+            color: '#6c757d',
+            border: '1px solid #dee2e6'
+          }}>
+            <strong>Debug:</strong> Showing {displayedCampers.length} of {filteredCampers.length} campers | 
+            Total: {campers.length} | Has more: {hasMore ? 'YES' : 'NO'}
+          </div>
+
           {filteredCampers.length === 0 && !isLoading ? (
             <div className={styles.noResults}>
               <h3>No campers found</h3>
@@ -135,7 +149,7 @@ export default function Catalog() {
                     onClick={handleLoadMore}
                     disabled={isLoading}
                   >
-                    {isLoading ? 'Loading...' : `Load more`}
+                    {isLoading ? 'Loading...' : `Load more (${filteredCampers.length - displayedCampers.length} remaining)`}
                   </button>
                 </div>
               )}
