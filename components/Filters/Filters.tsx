@@ -5,7 +5,7 @@ import styles from '@/components/Filters/Filters.module.css';
 import {useCampersStore} from '@/store/useCampersStore';
 
 const Filters: React.FC = () => {
-    const {filters, setFilters} = useCampersStore();
+    const {filters, setFilters, fetchCampers} = useCampersStore();
 
     const handleInputChange = (field: string, value: string | boolean) => {
         const newFilters = {...filters, [field]: value};
@@ -13,8 +13,8 @@ const Filters: React.FC = () => {
     };
 
     const handleSearch = () => {
-        // Фильтры применяются автоматически в Catalog компоненте
-        console.log('🔍 Search button clicked');
+        console.log('🔍 Applying filters:', filters);
+        fetchCampers(true);
     };
 
     const handleRadioChange = (form: string) => {
@@ -38,7 +38,6 @@ const Filters: React.FC = () => {
                 </div>
             </div>
 
-            {/*section Filter*/}
             <div className={styles.section}>
                 <h3 className={styles.sectionTitle}>Filters</h3>
 
@@ -111,13 +110,14 @@ const Filters: React.FC = () => {
                         <path d="M0 1H360" stroke="#DADDE1" />
                     </svg>
                     <div className={styles.radioGroup}>
+                        {/* Изменяем значения на реальные из данных */}
                         <label className={styles.radioLabel}>
                             <input 
                             type="radio" 
                             name="vehicleType" 
                             className={styles.radio}
-                            checked={filters.form === "van"}
-                            onChange={() => handleRadioChange('van')}/>
+                            checked={filters.form === "panelTruck"} // было "van"
+                            onChange={() => handleRadioChange('panelTruck')}/>
                             <img src="/icons/bi_grid-1x2.svg" alt="Van" width="32" height="32"/>
                             <span className={styles.radioText}>Van</span>
                         </label>
@@ -147,7 +147,7 @@ const Filters: React.FC = () => {
                 </div>
             </div>
 
-            {/* button - ВОЗВРАЩАЕМ КНОПКУ SEARCH */}
+            {/* button */}
             <button className={styles.searchButton} onClick={handleSearch}>
                 Search
             </button>

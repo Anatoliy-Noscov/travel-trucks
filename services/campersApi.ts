@@ -7,50 +7,69 @@ interface ApiResponse {
 }
 
 export const campersApi = {
-  getCampers: async (params: FilterParams = {}): Promise<Camper[]> => {
-    console.log('🔄 Fetching ALL campers from API');
+  getCampers: async (params: FilterParams = {}, page: number = 1, limit: number = 4): Promise<{items: Camper[], total: number}> => {
+    console.log('🔄 Fetching campers with params:', { params, page, limit });
 
     try {
-      // Делаем запрос БЕЗ пагинационных параметров, чтобы получить все данные
       const response = await api.get<ApiResponse>('/campers');
+      const allCampers = response.data?.items || [];
       
-      // API возвращает объект с полями total и items
-      const apiData = response.data;
-      const campersData = apiData?.items || [];
+      console.log(`✅ Loaded ${allCampers.length} campers from API`);
 
-      console.log('📋 API Response:', {
-        status: response.status,
-        dataStructure: apiData,
-        itemsCount: campersData.length,
-        firstItem: campersData[0]
-      });
-
+      // ФИЛЬТРАЦИЯ НА ФРОНТЕНДЕ
+      let filteredCampers = [...allCampers];
       
-      console.log(`✅ Received ${campersData.length} campers total`);
-      
-      return campersData;
-    } catch (error: any) {
-      console.error('❌ Error fetching campers from API:', {
-        status: error.response?.status,
-        message: error.message,
-        url: error.config?.url
-      });
-      
-      // Fallback: пытаемся получить данные напрямую
-      try {
-        console.log('🔄 Trying direct fetch as fallback...');
-        const directResponse = await fetch('https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers');
-        if (directResponse.ok) {
-          const data = await directResponse.json();
-          const items = data.items || data || [];
-          console.log(`✅ Fallback successful: received ${items.length} campers`);
-          return items;
-        }
-      } catch (fallbackError) {
-        console.error('❌ Fallback also failed:', fallbackError);
+      // Фильтр по локации
+      if (params.location && params.location.trim() !== '') {
+        filteredCampers = filteredCampers.filter(camper => 
+          camper.location.toLowerCase().includes(params.location!.toLowerCase())
+        );
       }
       
-      return [];
+      // Фильтр по типу транспортного средства
+      if (params.form && params.form.trim() !== '') {
+        // Преобразуем значения фильтров в реальные значения из данных
+        let formValue = params.form;
+        if (params.form === 'van') {
+          formValue = 'panelTruck'; // В данных 'van' называется 'panelTruck'
+        }
+        filteredCampers = filteredCampers.filter(camper => camper.form === formValue);
+      }
+      
+      // Фильтр по трансмиссии
+      if (params.transmission && params.transmission.trim() !== '') {
+        filteredCampers = filteredCampers.filter(camper => camper.transmission === params.transmission);
+      }
+      
+      // Фильтр по оборудованию
+      if (params.AC) {
+        filteredCampers = filteredCampers.filter(camper => camper.AC);
+      }
+      if (params.kitchen) {
+        filteredCampers = filteredCampers.filter(camper => camper.kitchen);
+      }
+      if (params.TV) {
+        filteredCampers = filteredCampers.filter(camper => camper.TV);
+      }
+      if (params.bathroom) {
+        filteredCampers = filteredCampers.filter(camper => camper.bathroom);
+      }
+
+      // ПАГИНАЦИЯ НА ФРОНТЕНДЕ
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + limit;
+      const paginatedCampers = filteredCampers.slice(startIndex, endIndex);
+      
+      console.log(`🔍 Frontend filtering: ${filteredCampers.length} matches, showing ${paginatedCampers.length} on page ${page}`);
+      console.log('📋 Available form values:', [...new Set(allCampers.map(c => c.form))]);
+      
+      return {
+        items: paginatedCampers,
+        total: filteredCampers.length
+      };
+    } catch (error: any) {
+      console.error('❌ Error fetching campers:', error);
+      return { items: [], total: 0 };
     }
   },
 
@@ -60,17 +79,6 @@ export const campersApi = {
       return response.data;
     } catch (error: any) {
       console.error(`Error fetching camper ${id}:`, error);
-      
-      // Fallback для деталей кемпера
-      try {
-        const directResponse = await fetch(`https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers/${id}`);
-        if (directResponse.ok) {
-          return await directResponse.json();
-        }
-      } catch (fallbackError) {
-        console.error('Fallback for camper details failed:', fallbackError);
-      }
-      
       throw error;
     }
   },
