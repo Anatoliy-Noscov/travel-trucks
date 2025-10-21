@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useCampersStore } from '@/store/useCampersStore';
 import styles from './page.module.css';
 import Filters from '@/components/Filters/Filters';
 import CamperCard from '@/components/CamperCard/CamperCard';
 import Loader from '@/components/Loader/Loader';
+import { Camper } from '@/types/campers';
 
 export default function Catalog() {
   const { 
@@ -13,18 +14,60 @@ export default function Catalog() {
     isLoading, 
     fetchCampers, 
     error,
-    getFilteredCampers
+    filters
   } = useCampersStore();
 
   // Локальное состояние для пагинации
   const [visibleCount, setVisibleCount] = useState(4);
   
-  // Получаем отфильтрованные кемперы
-  const filteredCampers = getFilteredCampers();
-  
+  // Функция фильтрации кемперов
+  const filterCampers = (campers: Camper[], filters: FilterParams): Camper[] => {
+    let filtered = [...campers];
+
+    // Фильтр по локации
+    if (filters.location && filters.location.trim() !== '') {
+      filtered = filtered.filter(camper => 
+        camper.location.toLowerCase().includes(filters.location!.toLowerCase())
+      );
+    }
+
+    // Фильтр по типу транспортного средства
+    if (filters.form && filters.form.trim() !== '') {
+      filtered = filtered.filter(camper => camper.form === filters.form);
+    }
+
+    // Фильтр по трансмиссии
+    if (filters.transmission && filters.transmission.trim() !== '') {
+      filtered = filtered.filter(camper => camper.transmission === filters.transmission);
+    }
+
+    // Фильтр по оборудованию
+    if (filters.AC) {
+      filtered = filtered.filter(camper => camper.AC);
+    }
+    if (filters.kitchen) {
+      filtered = filtered.filter(camper => camper.kitchen);
+    }
+    if (filters.TV) {
+      filtered = filtered.filter(camper => camper.TV);
+    }
+    if (filters.bathroom) {
+      filtered = filtered.filter(camper => camper.bathroom);
+    }
+
+    return filtered;
+  };
+
+  // Мемоизированные отфильтрованные кемперы
+  const filteredCampers = useMemo(() => {
+    return filterCampers(campers, filters);
+  }, [campers, filters]);
+
   // Отображаемые кемперы (с пагинацией)
-  const displayedCampers = filteredCampers.slice(0, visibleCount);
-  
+  const displayedCampers = useMemo(() => {
+    return filteredCampers.slice(0, visibleCount);
+  }, [filteredCampers, visibleCount]);
+
   // Есть ли еще кемперы для загрузки
   const hasMore = visibleCount < filteredCampers.length;
 
@@ -35,11 +78,13 @@ export default function Catalog() {
   // Сбрасываем пагинацию при изменении фильтров
   useEffect(() => {
     setVisibleCount(4);
-  }, [filteredCampers.length]);
+  }, [filters]);
 
   const handleLoadMore = () => {
     if (hasMore) {
-      setVisibleCount(prev => prev + 4);
+      const newCount = visibleCount + 4;
+      setVisibleCount(newCount);
+      console.log(`🔄 Load more: showing ${newCount} of ${filteredCampers.length}`);
     }
   };
 
@@ -70,22 +115,7 @@ export default function Catalog() {
             </div>
           )}
 
-          {/* Отладочная информация */}
-          <div style={{ 
-            marginBottom: '10px', 
-            padding: '8px 12px', 
-            backgroundColor: '#f8f9fa', 
-            borderRadius: '4px',
-            fontSize: '12px', 
-            color: '#6c757d',
-            border: '1px solid #dee2e6'
-          }}>
-            <strong>Showing:</strong> {displayedCampers.length} of {filteredCampers.length} campers | 
-            <strong> Total:</strong> {campers.length} | 
-            <strong> Has more:</strong> {hasMore ? 'YES' : 'NO'}
-          </div>
-
-          {displayedCampers.length === 0 && !isLoading ? (
+          {filteredCampers.length === 0 && !isLoading ? (
             <div className={styles.noResults}>
               <h3>No campers found</h3>
               <p>Try adjusting your filters</p>
@@ -105,7 +135,7 @@ export default function Catalog() {
                     onClick={handleLoadMore}
                     disabled={isLoading}
                   >
-                    {isLoading ? 'Loading...' : `Load more (${filteredCampers.length - displayedCampers.length} remaining)`}
+                    {isLoading ? 'Loading...' : `Load more`}
                   </button>
                 </div>
               )}

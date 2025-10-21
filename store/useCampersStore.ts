@@ -3,7 +3,7 @@ import { campersApi } from '@/services/campersApi';
 import { Camper, FilterParams } from '@/types/campers';
 
 interface CampersState {
-  campers: Camper[]; // Все кемперы с сервера
+  campers: Camper[];
   isLoading: boolean;
   error: string | null;
   filters: FilterParams;
@@ -12,7 +12,6 @@ interface CampersState {
   fetchCamperById: (id: string) => Promise<Camper | null>;
   setFilters: (filters: FilterParams) => void;
   resetFilters: () => void;
-  getFilteredCampers: () => Camper[]; // Фильтрация на клиенте
 }
 
 const initialFilters: FilterParams = {
@@ -41,7 +40,7 @@ export const useCampersStore = create<CampersState>((set, get) => ({
         isLoading: false,
       });
       
-      console.log(`📊 Store: loaded ${campers.length} campers total`);
+      console.log(`✅ Loaded ${campers.length} campers from API`);
     } catch (error) {
       set({ 
         error: 'Failed to fetch campers', 
@@ -73,45 +72,5 @@ export const useCampersStore = create<CampersState>((set, get) => ({
 
   resetFilters: () => {
     set({ filters: initialFilters });
-  },
-
-  getFilteredCampers: () => {
-    const { campers, filters } = get();
-    
-    let filtered = [...campers];
-
-    // Фильтр по локации
-    if (filters.location && filters.location.trim() !== '') {
-      filtered = filtered.filter(camper => 
-        camper.location.toLowerCase().includes(filters.location!.toLowerCase())
-      );
-    }
-
-    // Фильтр по типу транспортного средства
-    if (filters.form && filters.form.trim() !== '') {
-      filtered = filtered.filter(camper => camper.form === filters.form);
-    }
-
-    // Фильтр по трансмиссии
-    if (filters.transmission && filters.transmission.trim() !== '') {
-      filtered = filtered.filter(camper => camper.transmission === filters.transmission);
-    }
-
-    // Фильтр по оборудованию
-    if (filters.AC) {
-      filtered = filtered.filter(camper => camper.AC);
-    }
-    if (filters.kitchen) {
-      filtered = filtered.filter(camper => camper.kitchen);
-    }
-    if (filters.TV) {
-      filtered = filtered.filter(camper => camper.TV);
-    }
-    if (filters.bathroom) {
-      filtered = filtered.filter(camper => camper.bathroom);
-    }
-
-    console.log(`🔍 Filters applied: ${filtered.length} matches from ${campers.length} total`);
-    return filtered;
   },
 }));

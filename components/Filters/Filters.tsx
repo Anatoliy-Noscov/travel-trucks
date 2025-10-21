@@ -13,8 +13,8 @@ const Filters: React.FC = () => {
     };
 
     const handleSearch = () => {
-        // Фильтры применяются автоматически через getFilteredCampers
-        console.log('🔍 Applying filters...');
+        // Фильтры применяются автоматически в Catalog компоненте
+        console.log('🔍 Search button clicked');
     };
 
     const handleRadioChange = (form: string) => {
@@ -147,7 +147,7 @@ const Filters: React.FC = () => {
                 </div>
             </div>
 
-            {/* button */}
+            {/* button - ВОЗВРАЩАЕМ КНОПКУ SEARCH */}
             <button className={styles.searchButton} onClick={handleSearch}>
                 Search
             </button>
